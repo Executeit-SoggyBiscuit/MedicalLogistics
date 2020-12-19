@@ -77,11 +77,11 @@ public class Medication {
 
         this.cl = new CommandLib();
         cl.initMedicationSessionCl();
-        this.endsession = false;
+        this.endSession = false;
         // save the file upon creation
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
         dietSessionInputLoop();
-        setEndDietSession(true);
+        this.endSession = true;
     }
 
     private void dietSessionInputLoop() {
@@ -117,15 +117,15 @@ public class Medication {
         }
     }
 
-    public void saveToFile(String filePath, Storage storage, DietSession ds) {
+    public void saveToFile(String filePath, Storage storage, Medication ds) {
         try {
-            storage.init(filePath, ds.getDate().toString() + " " + ds.getTypeInput());
-            storage.saveMedication(filePath, ds.getDate().toString() + " " + ds.getTypeInput(), ds);
+            storage.init(filePath, ds.getName());
+            storage.saveMedication(filePath, ds.getName(), ds);
             logger.log(Level.INFO, "Diet session successfully saved");
         } catch (IOException e) {
             logger.log(Level.WARNING, "save profile session failed");
             MedicationSessionUi.showToUser("Failed to save your diet session!");
         }
-    }s
+    }
 }
 

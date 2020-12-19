@@ -43,7 +43,7 @@ public class MedicationSessionCreate extends Command {
             if (message.length() != 0) {
                 ui.showToUser(message.toString().trim());
             }
-            Medication med = new Medication(tag, date, true, -1);
+            Medication med = new Medication(name, quantity);
             med.start(true, -1);
             result = DIET_NEW_SUCCESS;
         } catch (IOException e) {
