@@ -12,7 +12,7 @@ public class DistResults {
     @JsonProperty("origin_addresses")
     List<String> originAddress;
     @JsonProperty("rows")
-    List<elements> rows;
+    List<distMatrix.rows> rows;
     String status;
 
     public DistResults(){
@@ -27,7 +27,7 @@ public class DistResults {
         return originAddress;
     }
 
-    public List<elements> getRows(){
+    public List<rows> getRows(){
         return rows;
     }
 
@@ -43,7 +43,7 @@ public class DistResults {
         this.originAddress = originAddress;
     }
 
-    public void setRows(List<elements> rowsList){
+    public void setRows(List<rows> rowsList){
         this.rows = rowsList;
     }
 

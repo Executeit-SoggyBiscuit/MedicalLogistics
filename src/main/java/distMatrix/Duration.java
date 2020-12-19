@@ -1,6 +1,6 @@
 package distMatrix;
 
-public class duration {
+public class Duration {
     String text;
     Double value;
 
