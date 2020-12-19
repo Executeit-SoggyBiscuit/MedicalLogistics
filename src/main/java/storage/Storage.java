@@ -102,4 +102,28 @@ public class Storage {
         }
         return location;
     }
+
+    /**
+     * Writes the content in dietSession to a local file.
+     * If the local file is not found. It creates the relevant file and folder.
+     * @param filePath a string that represents file path.
+     * @param filePathName a string that represents file path name.
+     * @param locationInfo that represents the class diet session
+     *
+     * @throws IOException If director or file cannot be created.
+     */
+    @SuppressWarnings("checkstyle:JavadocMethod")
+    public void writeToStorageDietSession(String filePath, String filePathName,
+                                          LocationInfo locationInfo) throws IOException {
+        logger.log(Level.INFO, "saving file to location");
+        File file = new File(filePath + filePathName + ".json");
+        if (file.exists()) {
+            file.delete();
+        }
+        FileWriter writer = new FileWriter(file.getPath());
+        gson.toJson(locationInfo, writer);
+        logger.log(Level.INFO, "file saving complete");
+        writer.flush();
+        writer.close();
+    }
 }
