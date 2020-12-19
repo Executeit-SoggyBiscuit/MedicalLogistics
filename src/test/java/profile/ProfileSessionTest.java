@@ -2,10 +2,6 @@ package profile;
 
 import diet.dietsession.DietSession;
 import exceptions.EndException;
-import exceptions.InsufficientArgumentException;
-import exceptions.InvalidCommandWordException;
-import exceptions.InvalidDateFormatException;
-import exceptions.SchwarzeneggerException;
 import exceptions.profile.InvalidCommandFormatException;
 import logic.commands.CommandResult;
 import models.Profile;

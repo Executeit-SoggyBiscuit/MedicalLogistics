@@ -1,11 +1,12 @@
 package exceptions;
 
-import static ui.profile.ProfileUi.MESSAGE_END;
 
 /**
  * Represents exception when user wants to return to Main Menu.
  */
-public class EndException extends SchwarzeneggerException {
+public class EndException extends Exception {
+
+    private static final String MESSAGE_END = "End error";
 
     /**
      * Constructs EndException object inheriting abstract class SchwarzeneggerException.

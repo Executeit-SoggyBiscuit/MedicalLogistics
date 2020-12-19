@@ -1,7 +1,6 @@
 package logic.commands.diet.dietmanager;
 
 import Medication.Medicationmanager.Medication;
-import diet.dietsession.DietSession;
 import logic.commands.Command;
 import logic.commands.CommandResult;
 import storage.Storage;

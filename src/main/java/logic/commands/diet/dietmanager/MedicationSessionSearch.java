@@ -1,14 +1,13 @@
 package logic.commands.diet.dietmanager;
 
 import Medication.Medicationmanager.Medication;
+import exceptions.InvalidDateFormatException;
 import logic.commands.Command;
 import logic.commands.CommandResult;
 import logic.parser.DateParser;
 import logic.parser.MedicationManagerParser;
-import diet.dietsession.DietSession;
-import exceptions.InvalidDateFormatException;
+
 import exceptions.diet.InvalidSearchDateException;
-import exceptions.profile.InvalidCommandFormatException;
 import storage.Storage;
 
 import java.io.File;
@@ -30,8 +29,8 @@ import static ui.diet.dietmanager.MedicationManagerUi.DIET_SEARCH_EMPTY_TAG;
 import static ui.diet.dietmanager.MedicationManagerUi.DIET_SEARCH_RESULTS_MESSAGE;
 import static ui.diet.dietmanager.MedicationManagerUi.EMPTY_STRING;
 
-public class
-MedicationSessionSearch extends Command {
+@SuppressWarnings("checkstyle:MissingJavadocType")
+public class MedicationSessionSearch extends Command {
     private final MedicationManagerParser parser = new MedicationManagerParser();
 
     public CommandResult execute(String input, Storage storage) throws InvalidDateFormatException,
@@ -41,7 +40,7 @@ MedicationSessionSearch extends Command {
         File[] listOfFiles = folder.listFiles();
         StringBuilder searchResult = new StringBuilder();
         try {
-            HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
+            HashMap<String, String> parsedParams = parser.extractDietManagerCommandNameAndQuantity("search", input);
             LocalDateTime startDate = parser.extractStartDates(parsedParams, searchResult);
 
             LocalDateTime endDate = parser.extractEndDates(parsedParams, searchResult);
@@ -56,7 +55,7 @@ MedicationSessionSearch extends Command {
             checkEmptyFolder(listOfFiles, searchResult);
             addToSearchResult(listOfFiles, searchResult, startDate, endDate, tag, storage);
             message = searchResult.toString();
-        } catch (NullPointerException | InvalidCommandFormatException e) {
+        } catch (NullPointerException e) {
             message = "Wrong format, please enter in the format:\n\t "
                     + "search </s [STARTING_DATE]> </e [END_DATE]> </t [TAG]>";
         } catch (InvalidDateFormatException e) {

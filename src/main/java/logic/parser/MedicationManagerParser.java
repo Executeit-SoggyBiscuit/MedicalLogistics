@@ -1,11 +1,10 @@
 package logic.parser;
 
 import exceptions.InvalidDateFormatException;
-import exceptions.profile.InvalidCommandFormatException;
 import logger.SchwarzeneggerLogger;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,26 +24,22 @@ public class MedicationManagerParser extends CommonParser {
      * @return date in MMM dd yyyy if the user inputs date in YYYY-MM-DD format;
      *         else returns original string
      * @throws IllegalStateException if the date is in wrong state
-     * @throws InvalidDateFormatException if the date is in wrong format
      */
-    public String extractNewDate(HashMap<String, String> parsedParams, StringBuilder extractDateMessage)
-            throws IllegalStateException, InvalidDateFormatException {
+    public int extractNewQuantity(HashMap<String, String> parsedParams, StringBuilder extractDateMessage)
+            throws IllegalStateException {
         try {
-            String dateString = parsedParams.get("/d").trim();
-            if (!dateString.isEmpty()) {
-                return DateParser.parseDate(dateString).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            String quantityString = parsedParams.get("/d").trim();
+            if (!quantityString.isEmpty()) {
+                return Integer.parseInt(quantityString);
             } else {
-                extractDateMessage.append("Date input is empty.\n");
+                extractDateMessage.append("Quantity input is empty.\n");
             }
-        } catch (InvalidDateFormatException e) {
-            throw new InvalidDateFormatException();
         } catch (NullPointerException e) {
-            extractDateMessage.append("No date input is detected.\n");
+            extractDateMessage.append("No quantity input is detected.\n");
+        } catch (NumberFormatException e) {
+            extractDateMessage.append("Quantity input is wrong.\n");
         }
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        extractDateMessage.append("\t I've replaced it with today's date.\n\t ");
-        return dtf.format(now);
+        return 0;
     }
 
     /**
@@ -56,19 +51,19 @@ public class MedicationManagerParser extends CommonParser {
      *         else returns "unspecified"
      * @throws NullPointerException if there is nothing in tag input
      */
-    public String extractNewTag(HashMap<String, String> parsedParams, StringBuilder extractMealMessage)
+    public String extractNewName(HashMap<String, String> parsedParams, StringBuilder extractMealMessage)
             throws NullPointerException {
         try {
             String tag = parsedParams.get("/t").trim();
             if (tag.isEmpty()) {
-                extractMealMessage.append("Tag input is empty, "
+                extractMealMessage.append("Name input is empty, "
                         + "and it is replaced with \"unspecified\".");
                 return "unspecified";
             } else {
                 return tag;
             }
         } catch (NullPointerException e) {
-            extractMealMessage.append("No tag is detected, "
+            extractMealMessage.append("No Name is detected, "
                     + "and the session is tagged as \"unspecified\".");
             return "unspecified";
         }
@@ -80,19 +75,13 @@ public class MedicationManagerParser extends CommonParser {
      * @param cmd user command
      * @param commandArgs user input
      * @return a hashmap where each information corresponds to the correct separator
-     * @throws InvalidCommandFormatException if user enters invalid commands
      */
-    public HashMap<String, String> extractDietManagerCommandTagAndInfo(String cmd, String commandArgs)
-            throws InvalidCommandFormatException {
+    @SuppressWarnings("checkstyle:CommentsIndentation")
+    public HashMap<String, String> extractDietManagerCommandNameAndQuantity(String cmd, String commandArgs) {
 
         HashMap<String, String> parsedParams = new HashMap<>();
         int startIndex = 0;
         int endIndex = 0;
-        if ((cmd.equals("search")) && (commandArgs.isEmpty() || !(commandArgs.contains("/t")
-                || commandArgs.contains("/s") || commandArgs.contains("/e")))) {
-            throw new InvalidCommandFormatException("Wrong format, please enter in the format:\n\t "
-                    + "search </s [STARTING_DATE]> </e [END_DATE]> </t [TAG]>");
-        }
 
         try {
             while (commandArgs.indexOf("/", startIndex) != -1) {
@@ -111,17 +100,7 @@ public class MedicationManagerParser extends CommonParser {
 
             return parsedParams;
         } catch (StringIndexOutOfBoundsException e) {
-            if (cmd.equals("search")) {
-                logger.log(Level.WARNING, "Wrong format for search input");
-                throw new InvalidCommandFormatException("Wrong format, please enter in the format:\n\t "
-                        + "search </s [STARTING_DATE]> </e [END_DATE]> </t [TAG]>");
-            } else if (cmd.equals("new")) {
-                logger.log(Level.WARNING, "Wrong format for create input");
-                throw new InvalidCommandFormatException("Wrong format, please enter in the format:\n\t "
-                        + "new /d [DATE] /t [TAG]");
-            } else {
-                throw new InvalidCommandFormatException("Wrong format");
-            }
+            return null;
         }
     }
 
@@ -148,10 +127,8 @@ public class MedicationManagerParser extends CommonParser {
      * @param parsedParams a hashmap that contains information about starting date
      * @param searchResult string build that contains warning messages
      * @return starting date
-     * @throws InvalidDateFormatException if the date is in wrong format
      */
-    public LocalDateTime extractStartDates(HashMap<String, String> parsedParams, StringBuilder searchResult)
-            throws InvalidDateFormatException {
+    public LocalDateTime extractStartDates(HashMap<String, String> parsedParams, StringBuilder searchResult) throws InvalidDateFormatException {
 
         try {
             String startDate = parsedParams.get("/s");
@@ -160,9 +137,6 @@ public class MedicationManagerParser extends CommonParser {
             }
         } catch (NullPointerException e) {
             logger.log(Level.WARNING, "It looks like there is no date input in start date");
-        } catch (InvalidDateFormatException e) {
-            logger.log(Level.WARNING, "Invalid date in start date");
-            throw new InvalidDateFormatException();
         }
         searchResult.append("Starting date is empty, "
                 + "and it is replaced with the earliest date.\n\t ");
@@ -175,21 +149,16 @@ public class MedicationManagerParser extends CommonParser {
      * @param parsedParams a hashmap that contains information about end date
      * @param searchResult string build that contains warning messages
      * @return end date
-     * @throws InvalidDateFormatException if the date is in wrong format
      */
-    public LocalDateTime extractEndDates(HashMap<String, String> parsedParams, StringBuilder searchResult)
-            throws InvalidDateFormatException {
+    public LocalDateTime extractEndDates(HashMap<String, String> parsedParams, StringBuilder searchResult) throws InvalidDateFormatException {
 
         try {
             String endDate = parsedParams.get("/e");
             if (!endDate.isEmpty()) {
                 return DateParser.parseDate(endDate);
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | InvalidDateFormatException e) {
             logger.log(Level.WARNING, "It looks like there is no date input in end date");
-        } catch (InvalidDateFormatException e) {
-            logger.log(Level.WARNING, "Invalid date in start date");
-            throw new InvalidDateFormatException();
         }
         searchResult.append("End date is empty, "
                 + "and it is replaced with the latest date.\n\t ");

@@ -1,6 +1,5 @@
 package logic.commands.main;
 
-import exceptions.InvalidCommandWordException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

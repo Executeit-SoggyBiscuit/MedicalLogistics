@@ -1,6 +1,5 @@
 package storage.profile;
 
-import exceptions.SchwarzeneggerException;
 import exceptions.profile.InvalidSaveFormatException;
 import models.Profile;
 import org.junit.jupiter.api.Test;

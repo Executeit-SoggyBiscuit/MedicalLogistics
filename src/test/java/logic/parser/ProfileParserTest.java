@@ -1,6 +1,5 @@
 package logic.parser;
 
-import exceptions.SchwarzeneggerException;
 import exceptions.profile.InvalidCommandFormatException;
 import org.junit.jupiter.api.Test;
 

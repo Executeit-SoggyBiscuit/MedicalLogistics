@@ -1,6 +1,5 @@
 package logic.commands.profile;
 
-import exceptions.SchwarzeneggerException;
 import logic.commands.CommandResult;
 import models.Profile;
 import org.junit.jupiter.api.Test;

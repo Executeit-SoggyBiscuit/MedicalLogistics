@@ -1,19 +1,18 @@
 package Medication.Medicationmanager;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import diet.dietsession.DietSession;
-import exceptions.ExceptionHandler;
 import exceptions.InvalidCommandWordException;
+import exceptions.InvalidDateFormatException;
+import exceptions.diet.InvalidSearchDateException;
 import logger.SchwarzeneggerLogger;
 import logic.commands.Command;
 import logic.commands.CommandLib;
 import logic.commands.CommandResult;
 import logic.parser.CommonParser;
-import logic.parser.DietSessionParser;
 import storage.Storage;
 import ui.diet.dietsession.MedicationSessionUi;
 
@@ -29,49 +28,60 @@ public class Medication {
     private transient CommandLib cl;
     private final Storage storage = new Storage();
     public boolean endSession = false;
-    //private ArrayList<Pair<Location, int>>
 
     private static Logger logger = SchwarzeneggerLogger.getInstanceLogger();
 
-    private boolean isNew;
-    private int index;
 
     private final MedicationSessionUi medicationSessionUi;
-    private final DietSessionParser parser = new DietSessionParser();
-    public boolean endDietSession = false;
 
+    @SuppressWarnings({"checkstyle:MissingJavadocMethod", "checkstyle:WhitespaceAround"})
     public Medication(String name, int quantity){
         this.name = name;
         this.quantity = quantity;
         this.cl = new CommandLib();
         medicationSessionUi = new MedicationSessionUi();
         cl.initMedicationSessionCl();
-        //something for location
     }
 
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public void setQuantity(int newQuantity) {
         this.quantity = newQuantity;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public int getQuantity() {
         return this.quantity;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public String getName() {
         return this.name;
     }
 
-    private void processCommand(String input) throws NullPointerException, InvalidCommandWordException {
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
+    private void processCommand(String input) throws NullPointerException, InvalidDateFormatException, InvalidCommandWordException, InvalidSearchDateException {
         CommonParser parser = new CommonParser();
         String[] commParts = parser.parseCommand(input);
         CommandLib cl = new CommandLib();
         Command command = cl.getCommand(commParts[0]);
-        CommandResult commandResult = command.execute(commParts[1].trim(), storage, index);
+        CommandResult commandResult = command.execute(commParts[1].trim(), storage);
         medicationSessionUi.showToUser(commandResult.getFeedbackMessage());
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
     }
 
+    private void saveToFile(String filePath, Storage storage, Medication ds) {
+        try {
+            storage.init(filePath, ds.getName());
+            storage.saveMedication(filePath, ds.getName(), ds);
+            logger.log(Level.INFO, "Diet session successfully saved");
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "save profile session failed");
+            MedicationSessionUi.showToUser("Failed to save your diet session!");
+        }
+    }
+
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     public void start(boolean isNew, int index) throws IOException {
 
         this.cl = new CommandLib();
@@ -83,36 +93,24 @@ public class Medication {
         this.endSession = true;
     }
 
+    @SuppressWarnings("checkstyle:MissingJavadocMethod")
     private void dietSessionInputLoop() {
         String input = "";
-        input = medicationSessionUi.getCommand("Diet Menu > Diet Session " + index);
+        input = medicationSessionUi.getCommand("Diet Menu > Diet Session ");
 
         while (!input.equals("end")) {
 
             try {
                 processCommand(input);
             } catch (NullPointerException e) {
-                medicationSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
                 break;
+            } catch (InvalidSearchDateException e) {
+                e.printStackTrace();
             } catch (InvalidCommandWordException e) {
-                medicationSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
+                e.printStackTrace();
+            } catch (InvalidDateFormatException e) {
+                e.printStackTrace();
             }
-            if (isNew) {
-                input = medicationSessionUi.getCommand("Diet Menu > New Diet Session");
-            } else {
-                input = medicationSessionUi.getCommand("Diet Menu > Diet Session " + index);
-            }
-        }
-    }
-
-    public void saveToFile(String filePath, Storage storage, Medication ds) {
-        try {
-            storage.init(filePath, ds.getName());
-            storage.saveMedication(filePath, ds.getName(), ds);
-            logger.log(Level.INFO, "Diet session successfully saved");
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "save profile session failed");
-            MedicationSessionUi.showToUser("Failed to save your diet session!");
         }
     }
 }

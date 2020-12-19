@@ -1,6 +1,5 @@
 package logic.commands.profile;
 
-import exceptions.SchwarzeneggerException;
 import models.Profile;
 import org.junit.jupiter.api.Test;
 import storage.profile.ProfileStorage;

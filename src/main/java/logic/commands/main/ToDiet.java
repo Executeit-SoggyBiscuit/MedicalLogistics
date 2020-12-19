@@ -1,6 +1,7 @@
 package logic.commands.main;
 
-import diet.dietmanager.DietManager;
+import Medication.Medicationmanager.MedicationManager;
+import exceptions.EndException;
 import exceptions.SchwarzeneggerException;
 import logic.commands.Command;
 import logic.commands.CommandResult;
@@ -21,7 +22,7 @@ public class ToDiet extends Command {
      * @throws SchwarzeneggerException If there are caught exceptions.
      */
     @Override
-    public CommandResult execute(String args) throws SchwarzeneggerException {
+    public CommandResult execute(String args) throws SchwarzeneggerException, EndException {
         assert args != null : "arguments cannot be null";
         super.execute(args);
 
@@ -29,8 +30,8 @@ public class ToDiet extends Command {
             ui.showWarning("\"diet\" command does not take in parameters");
         }
 
-        DietManager dietManager = new DietManager();
-        dietManager.start();
+        MedicationManager medicationManager = new MedicationManager();
+        medicationManager.start();
         return new CommandResult("", ExecutionResult.OK);
     }
 }

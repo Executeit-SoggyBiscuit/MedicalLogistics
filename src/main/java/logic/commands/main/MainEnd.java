@@ -20,7 +20,7 @@ public class MainEnd extends Command {
      * @throws SchwarzeneggerException If there are caught exceptions.
      */
     @Override
-    public CommandResult execute(String args) throws SchwarzeneggerException {
+    public CommandResult execute(String args) throws SchwarzeneggerException, EndException {
         assert args != null : "arguments cannot be null";
         super.execute(args);
 

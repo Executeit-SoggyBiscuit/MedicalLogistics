@@ -1,6 +1,5 @@
 package logic.parser;
 
-import exceptions.InvalidDateFormatException;
 import exceptions.profile.InvalidCommandFormatException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

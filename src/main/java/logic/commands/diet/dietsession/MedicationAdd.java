@@ -1,8 +1,8 @@
 package logic.commands.diet.dietsession;
 
+import Medication.Medicationmanager.Medication;
 import logic.commands.Command;
 import logic.parser.DietSessionParser;
-import models.Food;
 import exceptions.diet.NegativeCaloriesException;
 import exceptions.diet.NoNameException;
 import logic.commands.CommandResult;
@@ -12,7 +12,6 @@ import ui.diet.dietsession.MedicationSessionUi;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-import static profile.Constants.CALORIES_UPPER_BOUND;
 
 //@@author zsk612
 /**
@@ -30,19 +29,15 @@ public class MedicationAdd extends Command {
      * @return An object CommandResult containing the executing status and feedback message to be displayed
      *         to user.
      */
-    @Override
-    public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
         DietSessionParser parser = new DietSessionParser();
         String result = "";
         try {
             assert !input.isEmpty();
             StringBuilder userOutput = new StringBuilder();
             Double calories = parser.processFoodCalories(input);
-            Food temp = new Food(parser.processFoodName(input), Math.min(calories, CALORIES_UPPER_BOUND));
+            Medication temp = new Medication(parser.processFoodName(input), (int) parser.processFoodCalories(input));
             foodList.add(temp);
-            if (calories > CALORIES_UPPER_BOUND) {
-                userOutput.append(MedicationSessionUi.MESSAGE_HIGH_CALORIES);
-            }
             userOutput.append("Yay! You have added " + temp.toString());
             result = userOutput.toString();
             logger.log(Level.INFO, "Added food to arraylist");

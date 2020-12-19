@@ -1,7 +1,7 @@
 package logic.commands.diet.dietsession;
 
+import Medication.Medicationmanager.Medication;
 import logic.commands.Command;
-import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class MedicationClear extends Command {
-    @Override
-    public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
         String result = "";
         String prompt;
         if (index <= 0) {

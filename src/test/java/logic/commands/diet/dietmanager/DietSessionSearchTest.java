@@ -1,6 +1,5 @@
 package logic.commands.diet.dietmanager;
 
-import exceptions.InvalidDateFormatException;
 import exceptions.diet.InvalidSearchDateException;
 import org.junit.jupiter.api.Test;
 import storage.diet.DietStorage;
