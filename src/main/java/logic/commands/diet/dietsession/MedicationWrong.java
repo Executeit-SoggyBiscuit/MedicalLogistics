@@ -1,6 +1,6 @@
 package logic.commands.diet.dietsession;
 
-import Medication.Medicationmanager.Medication;
+import Location.Medication;
 import logic.commands.Command;
 import storage.Storage;
 

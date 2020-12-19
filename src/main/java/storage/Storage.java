@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
-import Medication.Medicationmanager.Medication;
+import Location.Medication;
 import logger.SchwarzeneggerLogger;
 import ui.diet.dietsession.MedicationSessionUi;
 

@@ -1,4 +1,4 @@
-package Medication.Medicationmanager;
+package Location;
 
 import exceptions.ExceptionHandler;
 import exceptions.InvalidCommandWordException;

@@ -1,6 +1,6 @@
 package classes;
 
-import Medication.Medicationmanager.Medication;
+import Location.Medication;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.InvalidCommandWordException;
 import exceptions.InvalidDateFormatException;

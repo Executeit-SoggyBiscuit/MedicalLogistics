@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import Location.LocationManager;
 import classes.LocationInfo;
 
 import distMatrix.DistMatrix;
@@ -73,6 +74,6 @@ public class Main {
         }
 
 
-        //new MedicationManager().start();
+        new LocationManager().start();
     }
 }

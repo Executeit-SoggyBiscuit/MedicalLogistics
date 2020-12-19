@@ -1,13 +1,10 @@
 package logic.commands.diet.dietsession;
 
-import Medication.Medicationmanager.Medication;
+import Location.Medication;
 import logic.commands.Command;
 import logic.parser.DietSessionParser;
-import exceptions.diet.NegativeCaloriesException;
-import exceptions.diet.NoNameException;
 import logic.commands.CommandResult;
 import storage.Storage;
-import ui.diet.dietsession.MedicationSessionUi;
 
 import java.util.ArrayList;
 import java.util.Scanner;

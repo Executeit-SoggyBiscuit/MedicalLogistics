@@ -1,4 +1,4 @@
-package Medication.Medicationmanager;
+package Location;
 
 import java.io.IOException;
 

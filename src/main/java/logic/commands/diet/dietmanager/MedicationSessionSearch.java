@@ -1,34 +1,14 @@
 package logic.commands.diet.dietmanager;
 
-import Medication.Medicationmanager.Medication;
-import classes.LocationInfo;
-import exceptions.InvalidDateFormatException;
 import logic.commands.Command;
-import logic.commands.CommandResult;
-import logic.parser.DateParser;
 import logic.parser.MedicationManagerParser;
 
-import exceptions.diet.InvalidSearchDateException;
-import storage.Storage;
-
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.stream.Collectors;
 
-import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
-import static ui.CommonUi.LS;
-import static ui.diet.dietmanager.MedicationManagerUi.DIET_DATE_WRONG_FORMAT;
 import static ui.diet.dietmanager.MedicationManagerUi.DIET_NO_SESSIONS_SAVED;
 import static ui.diet.dietmanager.MedicationManagerUi.DIET_SEARCH_EMPTY_TAG;
-import static ui.diet.dietmanager.MedicationManagerUi.DIET_SEARCH_RESULTS_MESSAGE;
-import static ui.diet.dietmanager.MedicationManagerUi.EMPTY_STRING;
 
 @SuppressWarnings("checkstyle:MissingJavadocType")
 public class MedicationSessionSearch extends Command {

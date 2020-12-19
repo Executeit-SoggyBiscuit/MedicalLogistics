@@ -1,6 +1,6 @@
 package logic.commands.main;
 
-import Medication.Medicationmanager.LocationManager;
+import Location.LocationManager;
 import exceptions.EndException;
 import exceptions.SchwarzeneggerException;
 import logic.commands.Command;
