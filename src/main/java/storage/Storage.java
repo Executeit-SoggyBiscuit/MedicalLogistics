@@ -76,8 +76,6 @@ public class Storage {
 
     /**
      * Reads the content of the .json file and instantiates as a DietSession.
-     *
-     * @param filePath path from source folder to save folder
      * @param filePathName name of file
      * @return DietSession instance
      */
@@ -86,7 +84,8 @@ public class Storage {
         Medication medication;
         medication = null;
         try {
-            File file = new File(System.getProperty("user.dir") + filePathName);
+            File file = new File(System.getProperty("user.dir") + "/"
+                    + filePath + filePathName);
             Reader reader = new FileReader(file.getPath());
             medication = gson.fromJson(reader, Medication.class);
             reader.close();

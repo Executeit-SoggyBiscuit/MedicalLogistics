@@ -17,7 +17,6 @@ import static ui.diet.dietmanager.MedicationManagerUi.DIET_FILE_CORRUPTED_MSG;
 import static ui.diet.dietmanager.MedicationManagerUi.DIET_NEW_SUCCESS;
 import static ui.diet.dietmanager.MedicationManagerUi.EMPTY_STRING;
 
-@SuppressWarnings("checkstyle:MissingJavadocType")
 public class MedicationSessionEdit extends Command {
 
     @Override
