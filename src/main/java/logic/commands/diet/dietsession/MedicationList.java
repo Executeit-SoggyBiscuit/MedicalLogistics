@@ -1,9 +1,9 @@
 package logic.commands.diet.dietsession;
 
+import Medication.Medicationmanager.Medication;
 import logic.commands.Command;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
-import models.Food;
 import storage.Storage;
 import ui.diet.dietsession.MedicationSessionUi;
 
@@ -17,16 +17,12 @@ import static ui.CommonUi.LS;
 
 public class MedicationList extends Command {
 
-    @Override
-    public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
         String result = "";
         try {
             double totalCalories = 0;
             StringBuilder listResult = new StringBuilder();
             if (foodList.size() > 0) {
-                for (int i = 0; i < foodList.size(); i++) {
-                    totalCalories += foodList.get(i).getCalories();
-                }
                 String totalMealCalories = "\n" + LS + "Your total calories for this meal is " + totalCalories + ".";
                 String formattedList = formatList(foodList);
                 listResult.append(formattedList);
@@ -44,10 +40,10 @@ public class MedicationList extends Command {
         return new CommandResult(result, ExecutionResult.OK);
     }
 
-    private String formatList(ArrayList<Food> foodList) {
+    private String formatList(ArrayList<Medication> foodList) {
 
         ArrayList<String> foodNames = (ArrayList<String>) foodList.stream()
-                .map(Food::getName).collect(Collectors.toList());
+                .map(Medication::getName).collect(Collectors.toList());
         int descriptionMaxLenInt = Math.max(10,
                 foodNames.stream().max(Comparator.comparingInt(String::length)).get().length());
 
@@ -60,8 +56,7 @@ public class MedicationList extends Command {
 
         String listDescriptionFormat = "%-" + String.format("%d", descriptionMaxLenInt) + "s %-9s ";
         for (int i = 0; i < foodList.size(); i++) {
-            String rowContent = String.format(listDescriptionFormat, foodList.get(i).getName(),
-                    foodList.get(i).getCalories());
+            String rowContent = String.format(listDescriptionFormat, foodList.get(i).getName());
             String row = String.format("%-8s", i + 1) + rowContent + LS;
             infoBuilder.append(row);
         }

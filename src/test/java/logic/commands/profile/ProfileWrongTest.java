@@ -1,6 +1,5 @@
 package logic.commands.profile;
 
-import exceptions.InvalidCommandWordException;
 import org.junit.jupiter.api.Test;
 import storage.profile.ProfileStorage;
 

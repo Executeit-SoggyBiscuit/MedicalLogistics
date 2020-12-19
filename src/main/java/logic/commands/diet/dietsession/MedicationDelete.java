@@ -1,7 +1,7 @@
 package logic.commands.diet.dietsession;
 
+import Medication.Medicationmanager.Medication;
 import logic.commands.Command;
-import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 public class MedicationDelete extends Command {
 
-    @Override
-    public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
         String result = "";
         try {
             assert !input.isEmpty();
             int indexOfSession = Integer.parseInt(input);
-            Food temp = foodList.get(indexOfSession - 1);
+            Medication temp = foodList.get(indexOfSession - 1);
             result = "You have deleted " + temp.toString() + " from your list!";
             foodList.remove(temp);
             logger.log(Level.INFO, "Removed food from arraylist");

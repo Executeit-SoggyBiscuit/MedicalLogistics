@@ -1,6 +1,5 @@
 package logic.commands.profile;
 
-import exceptions.SchwarzeneggerException;
 import exceptions.profile.InvalidCommandFormatException;
 import exceptions.profile.SavingException;
 import models.Profile;

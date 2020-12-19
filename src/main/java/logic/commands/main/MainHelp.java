@@ -1,5 +1,6 @@
 package logic.commands.main;
 
+import exceptions.EndException;
 import exceptions.SchwarzeneggerException;
 import logic.commands.Command;
 import logic.commands.CommandResult;
@@ -27,7 +28,7 @@ public class MainHelp extends Command {
      * @throws SchwarzeneggerException If there are caught exceptions.
      */
     @Override
-    public CommandResult execute(String args) throws SchwarzeneggerException {
+    public CommandResult execute(String args) throws SchwarzeneggerException, EndException {
         assert args != null : "arguments cannot be null";
         super.execute(args);
 

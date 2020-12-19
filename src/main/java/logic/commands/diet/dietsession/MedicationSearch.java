@@ -1,7 +1,7 @@
 package logic.commands.diet.dietsession;
 
+import Medication.Medicationmanager.Medication;
 import logic.commands.Command;
-import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
@@ -18,8 +18,7 @@ public class MedicationSearch extends Command {
 
     MedicationSessionUi ui = new MedicationSessionUi();
 
-    @Override
-    public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
         String result = "";
         try {
             StringBuilder searchResult = new StringBuilder();
@@ -35,10 +34,10 @@ public class MedicationSearch extends Command {
         return new CommandResult(result, ExecutionResult.OK);
     }
 
-    private String formatList(ArrayList<Food> foodList, String searchTag) {
+    private String formatList(ArrayList<Medication> foodList, String searchTag) {
 
         ArrayList<String> foodNames = (ArrayList<String>) foodList.stream()
-                .map(Food::getName).collect(Collectors.toList());
+                .map(Medication::getName).collect(Collectors.toList());
         int descriptionMaxLenInt = Math.max(10,
                 foodNames.stream().max(Comparator.comparingInt(String::length)).get().length());
 
@@ -53,9 +52,8 @@ public class MedicationSearch extends Command {
         int numberOfResults = 0;
         for (int i = 0; i < foodList.size(); i++) {
             String foodName = foodList.get(i).getName();
-            Double calories = foodList.get(i).getCalories();
             if (foodName.contains(searchTag)) {
-                String rowContent = String.format(listDescriptionFormat, foodName, calories);
+                String rowContent = String.format(listDescriptionFormat, foodName);
                 String row = String.format("%-8s",  ++numberOfResults) + rowContent + LS;
                 infoBuilder.append(row);
             }

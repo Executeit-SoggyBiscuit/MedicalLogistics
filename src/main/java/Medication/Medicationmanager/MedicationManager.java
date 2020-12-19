@@ -71,8 +71,8 @@ public class MedicationManager {
      *
      * @param input user input for command.
      * @throws InvalidCommandWordException handles InvalidCommandWordException.
-     * @throws InvalidDateFormatException handles invalid date input
      */
+    @SuppressWarnings("checkstyle:JavadocMethod")
     public void processCommand(String input) throws InvalidCommandWordException {
         String[] commParts = parser.parseCommand(input.trim());
         try {

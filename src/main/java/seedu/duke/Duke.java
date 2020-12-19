@@ -1,10 +1,6 @@
 package seedu.duke;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import exceptions.EndException;
-import exceptions.ExceptionHandler;
-import exceptions.SchwarzeneggerException;
 import geocoder.GeocodeResult;
 import geocoder.Geocoder;
 import logger.SchwarzeneggerLogger;
@@ -14,14 +10,10 @@ import logic.parser.CommonParser;
 import ui.CommonUi;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static logic.parser.CommonParser.COMMAND_ARGS_INDEX;
 import static logic.parser.CommonParser.COMMAND_TYPE_INDEX;
-import static seedu.duke.Constants.PATH_TO_PROFILE_FILE;
-import static seedu.duke.Constants.PATH_TO_PROFILE_FOLDER;
-import static ui.CommonUi.LOGO;
 
 /**
  * The Schwarzenegger program implements an application that keeps track of the user's gym and diet record.
@@ -81,10 +73,10 @@ public class Duke {
             e.printStackTrace();
         }
     }
-        /**
+    /**
      * Gets user's command and executes repeatedly until user requests to end Schwarzenegger.
      */
-    private void runCommandLoopTillEnd() {
+    private void runCommandLoopTillEnd() throws Exception {
         logger.info("running main menu loop");
 
         while (true) {
@@ -92,17 +84,7 @@ public class Duke {
             String[] commParts = parser.parseCommand(userInput);
             Command cm = cl.getCommand(commParts[COMMAND_TYPE_INDEX]);
 
-            try {
-                cm.execute(commParts[COMMAND_ARGS_INDEX]);
-            } catch (SchwarzeneggerException e) {
-                if (e instanceof EndException) {
-                    break;
-                }
-
-                ui.showToUser(ExceptionHandler.handleCheckedExceptions(e));
-            } catch (Exception e) {
-                ui.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
-            }
+            cm.execute(commParts[COMMAND_ARGS_INDEX]);
         }
     }
 

@@ -1,6 +1,5 @@
 package logic.parser;
 
-import exceptions.InvalidDateFormatException;
 import exceptions.workout.workoutmanager.NotANumberException;
 import models.PastWorkoutSessionRecord;
 import org.junit.jupiter.api.Test;

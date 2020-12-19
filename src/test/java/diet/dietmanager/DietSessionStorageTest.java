@@ -1,7 +1,6 @@
 package diet.dietmanager;
 
 import diet.dietsession.DietSession;
-import exceptions.InvalidDateFormatException;
 import org.junit.jupiter.api.Test;
 import storage.diet.DietStorage;
 
