@@ -7,7 +7,7 @@ import exceptions.diet.NegativeCaloriesException;
 import exceptions.diet.NoNameException;
 import logic.commands.CommandResult;
 import storage.Storage;
-import ui.diet.dietsession.MedicationSessionUi;
+import ui.diet.dietsession.DietSessionUi;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -41,22 +41,22 @@ public class MedicationAdd extends Command {
             Food temp = new Food(parser.processFoodName(input), Math.min(calories, CALORIES_UPPER_BOUND));
             foodList.add(temp);
             if (calories > CALORIES_UPPER_BOUND) {
-                userOutput.append(MedicationSessionUi.MESSAGE_HIGH_CALORIES);
+                userOutput.append(DietSessionUi.MESSAGE_HIGH_CALORIES);
             }
             userOutput.append("Yay! You have added " + temp.toString());
             result = userOutput.toString();
             logger.log(Level.INFO, "Added food to arraylist");
         } catch (IndexOutOfBoundsException e) {
-            result = MedicationSessionUi.MESSAGE_ADD_WRONG_FORMAT;
+            result = DietSessionUi.MESSAGE_ADD_WRONG_FORMAT;
             logger.log(Level.WARNING, "Wrong Add food item format");
         } catch (NumberFormatException e) {
-            result = MedicationSessionUi.MESSAGE_WRONG_CALORIES;
+            result = DietSessionUi.MESSAGE_WRONG_CALORIES;
             logger.log(Level.WARNING, "Put calories in a wrong format");
         } catch (NegativeCaloriesException e) {
-            result = MedicationSessionUi.MESSAGE_NEGATIVE_CALORIES;
+            result = DietSessionUi.MESSAGE_NEGATIVE_CALORIES;
             logger.log(Level.WARNING, "Put negative calories");
         } catch (NoNameException e) {
-            result = MedicationSessionUi.MESSAGE_NO_FOOD_NAME;
+            result = DietSessionUi.MESSAGE_NO_FOOD_NAME;
             logger.log(Level.WARNING, "no food name");
         }
         return new CommandResult(result);

@@ -5,7 +5,7 @@ import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
-import ui.diet.dietsession.MedicationSessionUi;
+import ui.diet.dietsession.DietSessionUi;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,17 +16,17 @@ public class MedicationClear extends Command {
         String result = "";
         String prompt;
         if (index <= 0) {
-            prompt = MedicationSessionUi.DIET_INPUT_PROMPT_NEW;
+            prompt = DietSessionUi.DIET_INPUT_PROMPT_NEW;
         } else {
-            prompt = MedicationSessionUi.DIET_INPUT_PROMPT_EDIT + index;
+            prompt = DietSessionUi.DIET_INPUT_PROMPT_EDIT + index;
         }
         if (ui.checkConfirmation(prompt, "clear all records")) {
             foodList.clear();
-            result = MedicationSessionUi.MESSAGE_CLEAR_SUCCESS;
+            result = DietSessionUi.MESSAGE_CLEAR_SUCCESS;
             logger.log(Level.INFO, "Cleared all food in arraylist");
             return new CommandResult(result, ExecutionResult.OK);
         } else {
-            result = MedicationSessionUi.MESSAGE_CLEAR_ABORTED;
+            result = DietSessionUi.MESSAGE_CLEAR_ABORTED;
             return new CommandResult(result, ExecutionResult.ABORTED);
         }
     }

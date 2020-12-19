@@ -5,7 +5,7 @@ import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import models.Food;
 import storage.Storage;
-import ui.diet.dietsession.MedicationSessionUi;
+import ui.diet.dietsession.DietSessionUi;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,11 +34,11 @@ public class MedicationList extends Command {
                 result = listResult.toString().trim();
                 logger.log(Level.INFO, "Listed all foods in Diet Session");
             } else {
-                listResult.append(MedicationSessionUi.MESSAGE_NO_FOOD);
+                listResult.append(DietSessionUi.MESSAGE_NO_FOOD);
                 result = listResult.toString().trim();
             }
         } catch (NullPointerException e) {
-            result = MedicationSessionUi.MESSAGE_NO_FOOD;
+            result = DietSessionUi.MESSAGE_NO_FOOD;
             logger.log(Level.WARNING, "No item in food list");
         }
         return new CommandResult(result, ExecutionResult.OK);

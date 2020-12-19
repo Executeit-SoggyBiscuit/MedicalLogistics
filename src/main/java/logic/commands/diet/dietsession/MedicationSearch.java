@@ -5,7 +5,7 @@ import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
-import ui.diet.dietsession.MedicationSessionUi;
+import ui.diet.dietsession.DietSessionUi;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,20 +16,20 @@ import static ui.CommonUi.LS;
 
 public class MedicationSearch extends Command {
 
-    MedicationSessionUi ui = new MedicationSessionUi();
+    DietSessionUi ui = new DietSessionUi();
 
     @Override
     public CommandResult execute(String input, ArrayList<Food> foodList, Storage storage, Integer index) {
         String result = "";
         try {
             StringBuilder searchResult = new StringBuilder();
-            searchResult.append(MedicationSessionUi.MESSAGE_SEARCH_PROMPT);
+            searchResult.append(DietSessionUi.MESSAGE_SEARCH_PROMPT);
             String formattedList = formatList(foodList, input.trim());
             searchResult.append(formattedList);
             result = searchResult.toString().trim();
             logger.log(Level.INFO, "Listed all searched foods in Diet Session");
         } catch (NullPointerException e) {
-            result = MedicationSessionUi.MESSAGE_NO_FOOD;
+            result = DietSessionUi.MESSAGE_NO_FOOD;
             logger.log(Level.WARNING, "No item in food list for search");
         }
         return new CommandResult(result, ExecutionResult.OK);
