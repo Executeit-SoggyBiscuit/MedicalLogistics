@@ -53,6 +53,7 @@ public class MedicationSessionCreate extends Command {
                 formattedAddress = response.getResults().get(0).getFormattedAddress();
             }
             LocationInfo location = new LocationInfo(name, formattedAddress, response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+
             location.start(name);
             result = DIET_NEW_SUCCESS;
         } catch (IOException | InterruptedException e) {

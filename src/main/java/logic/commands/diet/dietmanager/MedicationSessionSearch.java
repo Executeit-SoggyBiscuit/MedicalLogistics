@@ -1,6 +1,7 @@
 package logic.commands.diet.dietmanager;
 
 import Medication.Medicationmanager.Medication;
+import classes.LocationInfo;
 import exceptions.InvalidDateFormatException;
 import logic.commands.Command;
 import logic.commands.CommandResult;
@@ -48,18 +49,11 @@ public class MedicationSessionSearch extends Command {
             searchResult.append(DIET_SEARCH_RESULTS_MESSAGE + "\n\t ");
             //check for presence of files in diet session save folder
             checkEmptyFolder(listOfFiles, searchResult);
-            addToSearchResult(listOfFiles, searchResult, startDate, endDate, tag, storage);
+            //addToSearchResult(listOfFiles, searchResult, startDate, endDate, tag, storage);
             message = searchResult.toString();
         } catch (NullPointerException e) {
             message = "Wrong format, please enter in the format:\n\t "
                     + "search </s [STARTING_DATE]> </e [END_DATE]> </t [TAG]>";
-        } catch (InvalidDateFormatException e) {
-            searchResult.append(DIET_DATE_WRONG_FORMAT + "\n\t ");
-            logger.log(Level.WARNING, "Invalid date format in diet session search");
-            throw new InvalidDateFormatException();
-        } catch (InvalidSearchDateException e) {
-            logger.log(Level.WARNING, "Invalid date format in diet session search");
-            throw new InvalidSearchDateException();
         } catch (NoSuchElementException e) {
             logger.log(Level.WARNING, "No such element in diet session search");
             ui.showToUser("Sorry, there is nothing found in your diet menu.");
@@ -113,7 +107,7 @@ public class MedicationSessionSearch extends Command {
                        String listDescriptionFormat, int numberOfResult) throws InvalidDateFormatException {
         for (int i = 0; i < fileArrayList.size(); i++) {
             //instantiates stored diet session to get total calorie count
-            Medication med = storage.readMedication(PATH_TO_DIET_FOLDER, listOfFiles[i].getName());
+            LocationInfo location = storage.readLocation(PATH_TO_DIET_FOLDER, listOfFiles[i].getName());
             //extract tags and dates and assigns to string from filename
             String fileTag = getFileTag(fileArrayList, i);
             String fileDate = getFileDate(fileArrayList, i);
