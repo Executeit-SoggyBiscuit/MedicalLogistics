@@ -2,8 +2,11 @@ package seedu.duke;
 
 import classes.LocationInfo;
 
+import distMatrix.DistMatrix;
+import distMatrix.DistResults;
 import geocoder.GeocodeResult;
 
+import geocoder.Geocoder;
 import logger.SchwarzeneggerLogger;
 import logic.commands.CommandLib;
 import logic.parser.CommonParser;
