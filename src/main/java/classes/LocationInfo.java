@@ -1,7 +1,12 @@
 package classes;
 
+import Medication.Medicationmanager.Medication;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import logic.commands.CommandLib;
+import storage.Storage;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LocationInfo {
     private String name;
@@ -12,13 +17,17 @@ public class LocationInfo {
     private String longitude;
     private String latlong;
 
+    private final Storage storage;
     private transient CommandLib cl;
+    private final ArrayList<Medication> medList;
 
     public LocationInfo(String name, String address) {
         this.name = name;
         this.address = address;
         this.cl = new CommandLib();
         cl.initMedicationSessionCl();
+        storage = new Storage();
+        this.medList = new ArrayList<>();
     }
 
 
@@ -67,13 +76,11 @@ public class LocationInfo {
     public void start(String name) throws IOException {
 
         this.cl = new CommandLib();
-        cl.initDietSessionCL();
-        this.isNew = isNew;
-        this.index = index;
+        cl.initMedicationSessionCl();
+        this.name = name;
         // save the file upon creation
         saveToFile(storage, this);
         dietSessionInputLoop();
-        setEndDietSession(true);
     }
 
     /**
@@ -82,11 +89,7 @@ public class LocationInfo {
     private void dietSessionInputLoop() {
         String input = "";
 
-        if (isNew) {
-            input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
-        } else {
-            input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
-        }
+        input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
 
         while (!input.equals("end")) {
 
@@ -98,11 +101,7 @@ public class LocationInfo {
             } catch (InvalidCommandWordException e) {
                 dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
-            if (isNew) {
-                input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
-            } else {
-                input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
-            }
+            input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
         }
     }
 
@@ -115,14 +114,14 @@ public class LocationInfo {
     private void processCommand(String input) throws NullPointerException, InvalidCommandWordException {
         String[] commParts = parser.parse(input);
         Command command = cl.getCommand(commParts[0]);
-        command.execute(commParts[1].trim(), foodList, storage, index);
+        command.execute(commParts[1].trim(), medList, storage);
         saveToFile(storage, this);
     }
 
     public double getTotalCalories() {
         double totalCalories = 0;
-        for (int i = 0; i < foodList.size(); i++) {
-            totalCalories += foodList.get(i).getCalories();
+        for (int i = 0; i < medList.size(); i++) {
+            totalCalories += medList.get(i).getCalories();
         }
         return totalCalories;
     }
@@ -134,10 +133,10 @@ public class LocationInfo {
      * @param storage storage for diet manager
      * @param ds dietSession that is being changed
      */
-    private void saveToFile(DietStorage storage, DietSession ds) {
+    private void saveToFile(Storage storage, LocationInfo ds) {
         try {
-            storage.init(ds.getDate().toString() + " " + ds.getTypeInput());
-            storage.writeToStorageDietSession(ds.getDate().toString() + " " + ds.getTypeInput(), ds);
+            storage.init(ds.getName().toString());
+            storage.writeToStorageDietSession(ds.getName().toString(), ds);
             logger.log(Level.INFO, "Diet session successfully saved");
         } catch (IOException e) {
             logger.log(Level.WARNING, "save profile session failed");
