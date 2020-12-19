@@ -10,7 +10,7 @@ import logic.commands.CommandResult;
 import logic.parser.DietSessionParser;
 import models.Food;
 import storage.diet.DietStorage;
-import ui.diet.dietsession.DietSessionUi;
+import ui.diet.dietsession.MedicationSessionUi;
 import logic.parser.DateParser;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class DietSession {
     private boolean isNew;
     private int index;
 
-    private final DietSessionUi dietSessionUi;
+    private final MedicationSessionUi dietSessionUi;
     private transient CommandLib cl;
     private final DietStorage storage;
     private final DietSessionParser parser = new DietSessionParser();
@@ -57,7 +57,7 @@ public class DietSession {
         this.typeInput = typeInput;
         this.foodList = new ArrayList<>();
         storage = new DietStorage();
-        dietSessionUi = new DietSessionUi();
+        dietSessionUi = new MedicationSessionUi();
         this.isNew = isNew;
         this.index = index;
     }

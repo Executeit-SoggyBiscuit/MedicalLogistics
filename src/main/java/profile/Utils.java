@@ -12,20 +12,6 @@ import static profile.Constants.WEIGHT_UPPER_BOUND;
  * A class containing utility methods used in Profile Session.
  */
 public class Utils {
-    /**
-     * Verifies if user's input when creating profile is valid.
-     *
-     * @param profile User Profile object.
-     * @return Whether input profile is valid.
-     */
-    public static boolean checkValidProfile(Profile profile) {
-        return (profile != null
-                && checkValidName(profile.getName())
-                && checkValidCalories(profile.getCalories())
-                && checkValidHeight(profile.getHeight())
-                && checkValidWeight(profile.getWeight())
-                && checkValidWeight(profile.getExpectedWeight()));
-    }
 
     /**
      * Verifies if user's input name is not empty string.

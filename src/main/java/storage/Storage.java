@@ -6,7 +6,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
 import Medication.Medicationmanager.Medication;
 import logger.SchwarzeneggerLogger;
-import ui.diet.dietsession.DietSessionUi;
+import ui.diet.dietsession.MedicationSessionUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +27,7 @@ public class Storage {
     private static Logger logger = SchwarzeneggerLogger.getInstanceLogger();
     private static Gson gson;
     private static File file = null;
-    private static DietSessionUi ui = new DietSessionUi();
+    private static MedicationSessionUi ui = new MedicationSessionUi();
 
     /**
      * Initialise the database with locally stored data.

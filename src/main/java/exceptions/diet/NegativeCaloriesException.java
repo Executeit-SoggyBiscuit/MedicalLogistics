@@ -3,7 +3,7 @@ package exceptions.diet;
 
 import exceptions.SchwarzeneggerException;
 
-import static ui.diet.dietsession.DietSessionUi.MESSAGE_NEGATIVE_CALORIES;
+import static ui.diet.dietsession.MedicationSessionUi.MESSAGE_NEGATIVE_CALORIES;
 
 /**
  * Represents exception when calories is negative.

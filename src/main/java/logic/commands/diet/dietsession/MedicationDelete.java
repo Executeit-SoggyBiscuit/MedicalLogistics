@@ -5,7 +5,7 @@ import models.Food;
 import logic.commands.CommandResult;
 import logic.commands.ExecutionResult;
 import storage.Storage;
-import ui.diet.dietsession.DietSessionUi;
+import ui.diet.dietsession.MedicationSessionUi;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,10 +22,10 @@ public class MedicationDelete extends Command {
             foodList.remove(temp);
             logger.log(Level.INFO, "Removed food from arraylist");
         } catch (IndexOutOfBoundsException e) {
-            result = DietSessionUi.MESSAGE_NO_SUCH_INDEX;
+            result = MedicationSessionUi.MESSAGE_NO_SUCH_INDEX;
             logger.log(Level.WARNING, "Did not input index");
         } catch (NumberFormatException e) {
-            result = DietSessionUi.MESSAGE_DELETE_WRONG_FORMAT;
+            result = MedicationSessionUi.MESSAGE_DELETE_WRONG_FORMAT;
             logger.log(Level.WARNING, "Did not input correct index");
         }
         return new CommandResult(result, ExecutionResult.OK);

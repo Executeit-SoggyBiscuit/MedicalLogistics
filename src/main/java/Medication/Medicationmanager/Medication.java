@@ -1,15 +1,22 @@
 package Medication.Medicationmanager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import diet.dietsession.DietSession;
 import exceptions.ExceptionHandler;
 import exceptions.InvalidCommandWordException;
+import logger.SchwarzeneggerLogger;
 import logic.commands.Command;
 import logic.commands.CommandLib;
 import logic.commands.CommandResult;
 import logic.parser.CommonParser;
+import logic.parser.DietSessionParser;
+import models.Food;
 import storage.Storage;
+import ui.diet.dietsession.MedicationSessionUi;
 
 import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
 
@@ -25,10 +32,20 @@ public class Medication {
     public boolean endSession = false;
     //private ArrayList<Pair<Location, int>>
 
+    private static Logger logger = SchwarzeneggerLogger.getInstanceLogger();
+
+    private boolean isNew;
+    private int index;
+
+    private final MedicationSessionUi medicationSessionUi;
+    private final DietSessionParser parser = new DietSessionParser();
+    public boolean endDietSession = false;
+
     public Medication(String name, int quantity){
         this.name = name;
         this.quantity = quantity;
         this.cl = new CommandLib();
+        medicationSessionUi = new MedicationSessionUi();
         cl.initMedicationSessionCl();
         //something for location
     }
@@ -52,7 +69,7 @@ public class Medication {
         CommandLib cl = new CommandLib();
         Command command = cl.getCommand(commParts[0]);
         CommandResult commandResult = command.execute(commParts[1].trim(), foodList, storage, index);
-        dietSessionUi.showToUser(commandResult.getFeedbackMessage());
+        medicationSessionUi.showToUser(commandResult.getFeedbackMessage());
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
     }
 
@@ -60,7 +77,7 @@ public class Medication {
 
         this.cl = new CommandLib();
         cl.initMedicationSessionCl();
-        endsession = false;
+        this.endsession = false;
         // save the file upon creation
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
         dietSessionInputLoop();
@@ -69,27 +86,22 @@ public class Medication {
 
     private void dietSessionInputLoop() {
         String input = "";
-
-        if (isNew) {
-            input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
-        } else {
-            input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
-        }
+        input = medicationSessionUi.getCommand("Diet Menu > Diet Session " + index);
 
         while (!input.equals("end")) {
 
             try {
                 processCommand(input);
             } catch (NullPointerException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
+                medicationSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
                 break;
             } catch (InvalidCommandWordException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
+                medicationSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
             if (isNew) {
-                input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
+                input = medicationSessionUi.getCommand("Diet Menu > New Diet Session");
             } else {
-                input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
+                input = medicationSessionUi.getCommand("Diet Menu > Diet Session " + index);
             }
         }
     }
@@ -104,5 +116,16 @@ public class Medication {
             System.out.println("save failed...");
         }
     }
+
+    public void saveToFile(String filePath, Storage storage, DietSession ds) {
+        try {
+            storage.init(filePath, ds.getDate().toString() + " " + ds.getTypeInput());
+            storage.saveMedication(filePath, ds.getDate().toString() + " " + ds.getTypeInput(), ds);
+            logger.log(Level.INFO, "Diet session successfully saved");
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "save profile session failed");
+            MedicationSessionUi.showToUser("Failed to save your diet session!");
+        }
+    }s
 }
 
