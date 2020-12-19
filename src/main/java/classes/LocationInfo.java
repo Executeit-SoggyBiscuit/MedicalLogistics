@@ -3,12 +3,17 @@ package classes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LocationInfo {
+    private String name;
     private String address;
     @JsonProperty("lat")
     private String latitude;
     @JsonProperty("lng")
     private String longitude;
     private String latlong;
+
+    public void setName(String name){
+        this.name = name;
+    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -26,6 +31,10 @@ public class LocationInfo {
         if(latitude!=null){
             latlong = latitude + "," + longitude;
         }
+    }
+
+    public String getName(){
+        return name;
     }
 
     public String getAddress(){
