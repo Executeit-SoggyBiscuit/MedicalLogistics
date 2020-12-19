@@ -1,4 +1,4 @@
-package diet.dietsession;
+package medication.medicationsession;
 
 import exceptions.ExceptionHandler;
 import exceptions.InvalidCommandWordException;
@@ -7,10 +7,11 @@ import logger.SchwarzeneggerLogger;
 import logic.commands.Command;
 import logic.commands.CommandLib;
 import logic.commands.CommandResult;
-import logic.parser.DietSessionParser;
+import logic.parser.medicationSessionParser;
 import models.Food;
-import storage.diet.DietStorage;
-import ui.diet.dietsession.MedicationSessionUi;
+import storage.Storage;
+import storage.medication.medicationStorage;
+import ui.medication.medicationsession.medicationSessionUi;
 import logic.parser.DateParser;
 
 import java.io.IOException;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
+import static seedu.duke.Constants.PATH_TO_medication_FOLDER;
 
 /**
- * A class that is responsible for interacting with user in Diet Session.
+ * A class that is responsible for interacting with user in medication Session.
  */
-public class DietSession {
+public class medicationSession {
     private static Logger logger = SchwarzeneggerLogger.getInstanceLogger();
     private final ArrayList<Food> foodList;
 
@@ -34,30 +35,30 @@ public class DietSession {
     private boolean isNew;
     private int index;
 
-    private final MedicationSessionUi dietSessionUi;
+    private final medicationSessionUi medicationSessionUi;
     private transient CommandLib cl;
-    private final DietStorage storage;
-    private final DietSessionParser parser = new DietSessionParser();
-    public boolean endDietSession = false;
+    private final Storage storage;
+    private final medicationSessionParser parser = new medicationSessionParser();
+    public boolean endmedicationSession = false;
 
     /**
-     * Constructs DietSession and initialize command library for dietSession.
+     * Constructs medicationSession and initialize command library for medicationSession.
      *
      * @param typeInput User input for meal type
      * @param dateInput User input for meal date
-     * @param isNew Boolean that indicates whether the Diet Session is new or not
-     * @param index Integer for the index of the Diet Session
+     * @param isNew Boolean that indicates whether the medication Session is new or not
+     * @param index Integer for the index of the medication Session
      * @throws InvalidDateFormatException handles invalid date input
      */
-    public DietSession(String typeInput, String dateInput, boolean isNew, int index) throws InvalidDateFormatException {
+    public medicationSession(String typeInput, String dateInput, boolean isNew, int index) throws InvalidDateFormatException {
         this.cl = new CommandLib();
-        cl.initDietSessionCl();
+        cl.initmedicationSessionCl();
         this.dateInput = dateInput;
         this.date = DateParser.parseDate(dateInput).toLocalDate();
         this.typeInput = typeInput;
         this.foodList = new ArrayList<>();
-        storage = new DietStorage();
-        dietSessionUi = new MedicationSessionUi();
+        storage = new medicationStorage();
+        medicationSessionUi = new medicationSessionUi();
         this.isNew = isNew;
         this.index = index;
     }
@@ -74,41 +75,41 @@ public class DietSession {
         return typeInput;
     }
 
-    public void setEndDietSession(Boolean hasEnded) {
-        this.endDietSession = hasEnded;
+    public void setEndmedicationSession(Boolean hasEnded) {
+        this.endmedicationSession = hasEnded;
     }
 
     /**
-     * Starts dietSession and initializes command library for dietSession.
-     * @param isNew Boolean that indicates whether the Diet Session is new or not
-     * @param index Integer for the index of the Diet Session
+     * Starts medicationSession and initializes command library for medicationSession.
+     * @param isNew Boolean that indicates whether the medication Session is new or not
+     * @param index Integer for the index of the medication Session
      * @throws IOException handles input/output exception
      */
     public void start(boolean isNew, int index) throws IOException {
 
-        logger.log(Level.INFO, "starting diet session");
+        logger.log(Level.INFO, "starting medication session");
         this.cl = new CommandLib();
-        cl.initDietSessionCl();
-        dietSessionUi.printOpening();
-        setEndDietSession(false);
+        cl.initmedicationSessionCl();
+        medicationSessionUi.printOpening();
+        setEndmedicationSession(false);
         this.isNew = isNew;
         this.index = index;
         // save the file upon creation
-        saveToFile(PATH_TO_DIET_FOLDER, storage, this);
-        dietSessionInputLoop();
-        setEndDietSession(true);
+        saveToFile(PATH_TO_medication_FOLDER, storage, this);
+        medicationSessionInputLoop();
+        setEndmedicationSession(true);
     }
 
     /**
-     * Starts reading user input for dietSession commands.
+     * Starts reading user input for medicationSession commands.
      */
-    private void dietSessionInputLoop() {
+    private void medicationSessionInputLoop() {
         String input = "";
 
         if (isNew) {
-            input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
+            input = medicationSessionUi.getCommand("medication Menu > New medication Session");
         } else {
-            input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
+            input = medicationSessionUi.getCommand("medication Menu > medication Session " + index);
         }
 
         while (!input.equals("end")) {
@@ -116,21 +117,21 @@ public class DietSession {
             try {
                 processCommand(input);
             } catch (NullPointerException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
+                medicationSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
                 break;
             } catch (InvalidCommandWordException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
+                medicationSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
             if (isNew) {
-                input = dietSessionUi.getCommand("Diet Menu > New Diet Session");
+                input = medicationSessionUi.getCommand("medication Menu > New medication Session");
             } else {
-                input = dietSessionUi.getCommand("Diet Menu > Diet Session " + index);
+                input = medicationSessionUi.getCommand("medication Menu > medication Session " + index);
             }
         }
     }
 
     /**
-     * Processes user input for dietSession commands.
+     * Processes user input for medicationSession commands.
      *
      * @param input user input for command
      * @throws NullPointerException handles null pointer exception
@@ -140,12 +141,12 @@ public class DietSession {
         String[] commParts = parser.parseCommand(input);
         Command command = cl.getCommand(commParts[0]);
         CommandResult commandResult = command.execute(commParts[1].trim(), foodList, storage, index);
-        dietSessionUi.showToUser(commandResult.getFeedbackMessage());
-        saveToFile(PATH_TO_DIET_FOLDER, storage, this);
+        medicationSessionUi.showToUser(commandResult.getFeedbackMessage());
+        saveToFile(PATH_TO_medication_FOLDER, storage, this);
     }
 
     /**
-     * Calculates the sum of all food calories in diet session.
+     * Calculates the sum of all food calories in medication session.
      *
      * @return sum of calories of food
      */
@@ -162,17 +163,17 @@ public class DietSession {
      * Constructs method to save changes to storage file.
      *
      * @param filePath string for file path
-     * @param storage storage for diet manager
-     * @param ds      dietSession that is being changed
+     * @param storage storage for medication manager
+     * @param ds      medicationSession that is being changed
      */
-    public void saveToFile(String filePath, DietStorage storage, DietSession ds) {
+    public void saveToFile(String filePath, medicationStorage storage, medicationSession ds) {
         try {
             storage.init(filePath, ds.getDate().toString() + " " + ds.getTypeInput());
-            storage.writeToStorageDietSession(filePath, ds.getDate().toString() + " " + ds.getTypeInput(), ds);
-            logger.log(Level.INFO, "Diet session successfully saved");
+            storage.writeToStoragemedicationSession(filePath, ds.getDate().toString() + " " + ds.getTypeInput(), ds);
+            logger.log(Level.INFO, "medication session successfully saved");
         } catch (IOException e) {
             logger.log(Level.WARNING, "save profile session failed");
-            dietSessionUi.showToUser("Failed to save your diet session!");
+            medicationSessionUi.showToUser("Failed to save your medication session!");
         }
     }
 }

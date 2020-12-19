@@ -16,7 +16,7 @@ public class FoodItemAddTest {
 
     ArrayList<Food> foodList = new ArrayList<>();
     DietStorage storage = new DietStorage();
-    FoodItemAdd foodItemAdd = new FoodItemAdd();
+    MedicationAdd foodItemAdd = new MedicationAdd();
 
     @Test
     public void execute_correctFoodItem_addSuccessful() {

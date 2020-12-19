@@ -16,7 +16,7 @@ public class FoodItemClearTest {
 
     ArrayList<Food> foodList = new ArrayList<>();
     DietStorage storage = new DietStorage();
-    FoodItemClear foodItemClear = new FoodItemClear();
+    MedicationClear foodItemClear = new MedicationClear();
 
     @Test
     public void execute_clearWithYes_clearSuccessful() {

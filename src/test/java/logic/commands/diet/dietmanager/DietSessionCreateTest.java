@@ -7,9 +7,9 @@ import storage.diet.DietStorage;
 import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ui.diet.dietmanager.DietManagerUi.DIET_CREATE_WRONG_FORMAT;
-import static ui.diet.dietmanager.DietManagerUi.DIET_DATE_WRONG_FORMAT;
-import static ui.diet.dietmanager.DietManagerUi.DIET_NEW_SUCCESS;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_CREATE_WRONG_FORMAT;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_DATE_WRONG_FORMAT;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_NEW_SUCCESS;
 
 //@@author CFZeon
 public class DietSessionCreateTest {

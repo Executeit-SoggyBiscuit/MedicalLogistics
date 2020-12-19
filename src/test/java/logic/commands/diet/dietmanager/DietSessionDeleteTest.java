@@ -7,9 +7,9 @@ import storage.diet.DietStorage;
 import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ui.diet.dietmanager.DietManagerUi.DIET_DELETE_SUCCESS;
-import static ui.diet.dietmanager.DietManagerUi.DIET_DELETE_WRONG_FORMAT;
-import static ui.diet.dietmanager.DietManagerUi.DIET_FILE_ARRAY_OUT_OF_BOUND;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_DELETE_SUCCESS;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_DELETE_WRONG_FORMAT;
+import static ui.diet.dietmanager.MedicationManagerUi.DIET_FILE_ARRAY_OUT_OF_BOUND;
 
 //@@author CFZeon
 public class DietSessionDeleteTest {

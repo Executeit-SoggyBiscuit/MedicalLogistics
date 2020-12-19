@@ -2,7 +2,6 @@ package logic.parser;
 
 import exceptions.workout.workoutsession.AddFormatException;
 import exceptions.workout.workoutsession.DeleteFormatException;
-import logic.parser.WorkoutSessionParser;
 import models.Exercise;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.jupiter.api.Test;

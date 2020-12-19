@@ -7,12 +7,12 @@ import logic.commands.diet.dietmanager.DietSessionEdit;
 import logic.commands.diet.dietmanager.DietSessionHelp;
 import logic.commands.diet.dietmanager.DietSessionList;
 import logic.commands.diet.dietmanager.DietSessionWrong;
-import logic.commands.diet.dietsession.FoodItemAdd;
-import logic.commands.diet.dietsession.FoodItemClear;
-import logic.commands.diet.dietsession.FoodItemDelete;
-import logic.commands.diet.dietsession.FoodItemHelp;
-import logic.commands.diet.dietsession.FoodItemList;
-import logic.commands.diet.dietsession.FoodItemWrong;
+import logic.commands.diet.dietsession.MedicationAdd;
+import logic.commands.diet.dietsession.MedicationClear;
+import logic.commands.diet.dietsession.MedicationDelete;
+import logic.commands.diet.dietsession.MedicationHelp;
+import logic.commands.diet.dietsession.MedicationList;
+import logic.commands.diet.dietsession.MedicationWrong;
 import logic.commands.main.MainHelp;
 import logic.commands.main.MainWrong;
 import logic.commands.main.ToDiet;
@@ -97,42 +97,42 @@ class CommandLibTest {
     void getCommandTest_DietManagerUnrecognisedCommand_returnFoodItemWrong() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("unregconised") instanceof FoodItemWrong);
+        assertTrue(cl.getCommand("unregconised") instanceof MedicationWrong);
     }
 
     @Test
     void getCommandTest_listFoodItem_returnListCommand() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("list") instanceof FoodItemList);
+        assertTrue(cl.getCommand("list") instanceof MedicationList);
     }
 
     @Test
     void getCommandTest_deleteFoodItem_returnDeleteCommand() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("delete") instanceof FoodItemDelete);
+        assertTrue(cl.getCommand("delete") instanceof MedicationDelete);
     }
 
     @Test
     void getCommandTest_newFoodItem_returnNewCommand() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("add") instanceof FoodItemAdd);
+        assertTrue(cl.getCommand("add") instanceof MedicationAdd);
     }
 
     @Test
     void getCommandTest_clearFoodItem_returnClearCommand() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("clear") instanceof FoodItemClear);
+        assertTrue(cl.getCommand("clear") instanceof MedicationClear);
     }
 
     @Test
     void getCommandTest_helpFoodItem_returnHelpCommand() {
         CommandLib cl = new CommandLib();
         cl.initDietSessionCl();
-        assertTrue(cl.getCommand("help") instanceof FoodItemHelp);
+        assertTrue(cl.getCommand("help") instanceof MedicationHelp);
     }
 
     @Test
