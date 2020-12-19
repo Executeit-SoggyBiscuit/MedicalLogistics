@@ -41,8 +41,6 @@ public class Main {
      */
     public static void main(String[] args) throws IOException, InterruptedException  {
 
-        Geocoder geocoder = new Geocoder();
-
         GeocodeResult response = geocoder.geocodeSync("ntu","sg");
         String formattedAddress = "";
         if(userinput==allnumber) {
