@@ -1,5 +1,6 @@
 package storage;
 
+import classes.LocationInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -79,15 +80,16 @@ public class Storage {
      * @param filePathName name of file
      * @return DietSession instance
      */
-    public Medication readMedication(String filePath, String filePathName) {
+    @SuppressWarnings("checkstyle:JavadocMethod")
+    public LocationInfo readLocation(String filePath, String filePathName) {
         Gson gson = new Gson();
-        Medication medication;
-        medication = null;
+        LocationInfo location;
+        location = null;
         try {
             File file = new File(System.getProperty("user.dir") + "/"
                     + filePath + filePathName);
             Reader reader = new FileReader(file.getPath());
-            medication = gson.fromJson(reader, Medication.class);
+            location = gson.fromJson(reader, LocationInfo.class);
             reader.close();
         } catch (FileNotFoundException e) {
             ui.showToUser(DIET_FILE_NOT_FOUND);
@@ -98,6 +100,6 @@ public class Storage {
         } catch (IOException e) {
             logger.log(Level.WARNING, "Could not read diet session");
         }
-        return medication;
+        return location;
     }
 }

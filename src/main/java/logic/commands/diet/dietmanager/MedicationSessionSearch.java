@@ -41,12 +41,7 @@ public class MedicationSessionSearch extends Command {
         StringBuilder searchResult = new StringBuilder();
         try {
             HashMap<String, String> parsedParams = parser.extractDietManagerCommandNameAndQuantity("search", input);
-            LocalDateTime startDate = parser.extractStartDates(parsedParams, searchResult);
 
-            LocalDateTime endDate = parser.extractEndDates(parsedParams, searchResult);
-            if (startDate.compareTo(endDate) > 0) {
-                throw new InvalidSearchDateException();
-            }
             String tag = parser.extractSearchTag(parsedParams, searchResult);
             //check for empty tag in search parameter
             checkEmptyTag(searchResult, tag);

@@ -1,6 +1,7 @@
 package logic.commands.diet.dietmanager;
 
 import Medication.Medicationmanager.Medication;
+import classes.LocationInfo;
 import logic.commands.Command;
 import logic.commands.CommandResult;
 import storage.Storage;
@@ -25,10 +26,10 @@ public class MedicationSessionEdit extends Command {
         File folder = new File(PATH_TO_DIET_FOLDER);
         File[] listOfFiles = folder.listFiles();
         try {
-            Medication med = null;
+            LocationInfo location = null;
             assert listOfFiles != null : "List of files should not be null";
-            med = storage.readMedication(PATH_TO_DIET_FOLDER, listOfFiles[Integer.parseInt(input) - 1].getName());
-            med.start(false, Integer.parseInt(input));
+            location = storage.readLocation(PATH_TO_DIET_FOLDER, listOfFiles[Integer.parseInt(input) - 1].getName());
+            location.start(listOfFiles[Integer.parseInt(input) - 1].getName());
             logger.log(Level.INFO, "Diet session in edit mode");
             result = DIET_NEW_SUCCESS;
         } catch (FileNotFoundException

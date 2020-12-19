@@ -1,6 +1,7 @@
 package logic.commands.diet.dietmanager;
 
 import Medication.Medicationmanager.Medication;
+import classes.LocationInfo;
 import logic.commands.Command;
 import logic.commands.CommandResult;
 import storage.Storage;
@@ -28,15 +29,15 @@ public class MedicationSessionList extends Command {
         StringBuilder listResult = new StringBuilder();
         assert folder.exists();
         try {
-            String dietSessionListSize = "You have " + listOfFiles.length + " record(s)" + LS;
+            String dietSessionListSize = "You have " + listOfFiles.length + " location(s)" + LS;
             String dietSessionList = formatList(listOfFiles, storage);
             listResult.append(dietSessionListSize);
             listResult.append(dietSessionList);
             message = listResult.toString();
-            logger.log(Level.INFO, "Listed all available diet sessions");
+            logger.log(Level.INFO, "Listed all available locations");
         } catch (NullPointerException | NoSuchElementException e) {
             message = MedicationManagerUi.DIET_NO_SESSION_SAVED;
-            logger.log(Level.WARNING, "No instances of diet sessions saved");
+            logger.log(Level.WARNING, "No instances of locations saved");
         }
         return new CommandResult(message);
     }
@@ -60,7 +61,7 @@ public class MedicationSessionList extends Command {
         String listDescriptionFormat = "%-" + String.format("%d", descriptionMaxLenInt) + "s %-11s %s";
         // adds the contents of each diet session and consolidates it into table format
         for (int i = 0; i < fileArrayList.size(); i++) {
-            Medication med = storage.readMedication(PATH_TO_DIET_FOLDER, listOfFiles[i].getName());
+            LocationInfo location = storage.readLocation(PATH_TO_DIET_FOLDER, listOfFiles[i].getName());
             // formats each diet session entry into column form
             String rowContent = formatRow(fileArrayList, listDescriptionFormat, i);
             String row = String.format("%-8s", i + 1) + rowContent + LS;
