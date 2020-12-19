@@ -33,7 +33,7 @@ import static ui.diet.dietmanager.MedicationManagerUi.EMPTY_STRING;
 public class MedicationSessionSearch extends Command {
     private final MedicationManagerParser parser = new MedicationManagerParser();
 
-    public CommandResult execute(String input, Storage storage) throws InvalidDateFormatException,
+    /*public CommandResult execute(String input, Storage storage) throws InvalidDateFormatException,
             InvalidSearchDateException {
         String message = EMPTY_STRING;
         File folder = new File(PATH_TO_DIET_FOLDER);
@@ -65,7 +65,7 @@ public class MedicationSessionSearch extends Command {
             ui.showToUser("Sorry, there is nothing found in your diet menu.");
         }
         return new CommandResult(message.trim());
-    }
+    }*/
 
     private void checkEmptyFolder(File[] listOfFiles, StringBuilder searchResult) {
         if (Objects.requireNonNull(listOfFiles).length == 0) {
@@ -79,7 +79,7 @@ public class MedicationSessionSearch extends Command {
         }
     }
 
-    private void addToSearchResult(File[] listOfFiles, StringBuilder searchResult, LocalDateTime startDate,
+    /*private void addToSearchResult(File[] listOfFiles, StringBuilder searchResult, LocalDateTime startDate,
                                    LocalDateTime endDate, String tag, Storage storage)
             throws InvalidDateFormatException {
         //convert the file array to an arraylist for easier manipulation
@@ -106,9 +106,9 @@ public class MedicationSessionSearch extends Command {
             searchResult.append("Sorry, there is nothing found in your diet menu.");
         }
         searchResult.append(dietSessionSearchSize);
-    }
+    }*/
 
-    private int addRow(File[] listOfFiles, StringBuilder searchResult, LocalDateTime startDate,
+    /*private int addRow(File[] listOfFiles, StringBuilder searchResult, LocalDateTime startDate,
                        LocalDateTime endDate, String tag, Storage storage, ArrayList<File> fileArrayList,
                        String listDescriptionFormat, int numberOfResult) throws InvalidDateFormatException {
         for (int i = 0; i < fileArrayList.size(); i++) {
@@ -126,7 +126,7 @@ public class MedicationSessionSearch extends Command {
             }
         }
         return numberOfResult;
-    }
+    }*/
 
     /**
      * Reads file name and returns date.

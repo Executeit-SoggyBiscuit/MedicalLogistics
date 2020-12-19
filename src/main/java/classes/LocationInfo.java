@@ -39,6 +39,7 @@ public class LocationInfo {
         this.medList = new ArrayList<>();
         this.latitude = latitude;
         this.longitude = longitude;
+        latlong = latitude + "," + longitude;
     }
 
 

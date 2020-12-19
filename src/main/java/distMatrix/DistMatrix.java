@@ -1,10 +1,15 @@
 package distMatrix;
 
 
-import classes.DistanceInfo;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geocoder.GeocodeResult;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import classes.LocationInfo;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+import geocoder.GeocodeResult;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,25 +29,27 @@ public class DistMatrix {
     public DistResults getClient(LocationInfo origin, ArrayList<LocationInfo> destination) throws IOException,
             InterruptedException {
 
-        String encodedOrigin = URLEncoder.encode(origin.getLatlong(),"UTF-8");
-        String requestUri = base_url + "&origin=" + encodedOrigin + "&destination=";
+        //String encodedOrigin = URLEncoder.encode(origin.getLatlong(),"UTF-8");
+        String encodedOrigin = origin.getLatlong();
+        String requestUri = base_url + "&origins=" + encodedOrigin + "&destinations=";
         if(destination.size()<80) {
             for (int i = 0; i < destination.size(); i++) {
-                String encodedDestination = URLEncoder.encode(destination.get(i).getLatlong(), "UTF-8");
-                if (i != destination.size() - 1) {
-                    requestUri = requestUri + encodedDestination + "|";
+                //String encodedDestination = URLEncoder.encode(destination.get(i).getLatlong(), "UTF-8");
+                String encodedDestination = destination.get(i).getLatlong();
+                if (i != destination.size()-1) {
+                    requestUri = requestUri + encodedDestination + "%7C";
                 } else {
                     requestUri = requestUri + encodedDestination;
                 }
             }
             requestUri = requestUri + "&key=" + GOOGLE_PLACE_API_KEY;
-            DistResults result = requestHttp(requestUri);
+            System.out.println(requestUri);
 
         }else{
             for (int i = 0; i < 80; i++) {
                 String encodedDestination = URLEncoder.encode(destination.get(i).getLatlong(), "UTF-8");
                 if (i != destination.size() - 1) {
-                    requestUri = requestUri + encodedDestination + "|";
+                    requestUri = requestUri + encodedDestination + "%7C";
                 } else {
                     requestUri = requestUri + encodedDestination;
                 }

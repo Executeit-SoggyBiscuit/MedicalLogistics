@@ -1,24 +1,26 @@
 package distMatrix;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class distance {
     String text;
-    Double value;
+    String value;
 
     public void setText(String text){
         this.text = text;
     }
 
     public void setValue(String value){
-        this.value = Double.parseDouble(value);
+        this.value = value;
     }
 
     public String getText(){
         return text;
     }
 
-    public Double getValue(){
+    public String getValue(){
         return value;
     }
 }

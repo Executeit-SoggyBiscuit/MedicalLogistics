@@ -55,10 +55,11 @@ public class Main {
         LocationInfo location2 = new LocationInfo(formattedAddress,"nus", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
         ArrayList<LocationInfo> locationInfos = new ArrayList<LocationInfo>();
         locationInfos.add(location2);
+        locationInfos.add(location2);
         DistMatrix distMatrix = new DistMatrix();
 
         DistResults distResults = distMatrix.getClient(location, locationInfos);
-        System.out.println(distResults.getRows().get(0).getElements().get(0).getDistance().get(0).getValue());
+        System.out.println(distResults.getRows().get(0).getDistance().get(0).getValue());
 
         //new MedicationManager().start();
     }
