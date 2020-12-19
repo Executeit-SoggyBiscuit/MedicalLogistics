@@ -15,7 +15,7 @@ public class FoodItemDeleteTest {
 
     ArrayList<Food> foodList = new ArrayList<>();
     DietStorage storage = new DietStorage();
-    FoodItemDelete foodItemDelete = new FoodItemDelete();
+    MedicationDelete foodItemDelete = new MedicationDelete();
 
     @Test
     public void execute_correctFoodItemIndex_deleteSuccessful() {

@@ -21,7 +21,7 @@ public class DietManagerParserTest {
     @Test
     void parseString_validInput_success() {
         String input = "first second";
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         String[] expected = {"first", "second"};
         String[] result = parser.parseCommand(input);
         assertTrue(Arrays.equals(expected, result));
@@ -30,7 +30,7 @@ public class DietManagerParserTest {
     @Test
     void parseString_invalidInput_failure() {
         String input = "FirstSecond";
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         String[] expected = {"First", "Second"};
         String[] result = parser.parseCommand(input);
         Assertions.assertFalse(Arrays.equals(expected, result));
@@ -59,7 +59,7 @@ public class DietManagerParserTest {
         String input = "/d 2020-05-04";
         String expected = "04-05-2020";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedDate = parser.extractNewDate(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -69,7 +69,7 @@ public class DietManagerParserTest {
     void extractNewDate_invalidDateInput_throwInvalidDateFormatException() throws InvalidCommandFormatException {
         String input = "/d 2131-14-51";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         assertThrows(InvalidDateFormatException.class, () ->
                 parser.extractNewDate(parsedParams, message));
@@ -83,7 +83,7 @@ public class DietManagerParserTest {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String expected = dtf.format(now);
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedDate = parser.extractNewDate(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -97,7 +97,7 @@ public class DietManagerParserTest {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String expected = dtf.format(now);
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedDate = parser.extractNewDate(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -108,7 +108,7 @@ public class DietManagerParserTest {
         String input = "/t lunch";
         String expected = "lunch";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         String extractedTag = parser.extractSearchTag(parsedParams, message);
         assertEquals(expected, extractedTag);
@@ -119,7 +119,7 @@ public class DietManagerParserTest {
         String input = "/s 2020-11-11 /e 2020-11-23";
         String expected = "";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         String extractedTag = parser.extractSearchTag(parsedParams, message);
         assertEquals(expected, extractedTag);
@@ -130,7 +130,7 @@ public class DietManagerParserTest {
         String input = "/t lunch";
         String expected = "lunch";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedTag = parser.extractNewTag(parsedParams, message);
         assertEquals(expected, extractedTag);
@@ -141,7 +141,7 @@ public class DietManagerParserTest {
         String input = "/t ";
         String expected = "unspecified";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedTag = parser.extractNewTag(parsedParams, message);
         assertEquals(expected, extractedTag);
@@ -152,7 +152,7 @@ public class DietManagerParserTest {
         String input = "";
         String expected = "unspecified";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("new", input);
         String extractedTag = parser.extractNewTag(parsedParams, message);
         assertEquals(expected, extractedTag);
@@ -164,7 +164,7 @@ public class DietManagerParserTest {
         String input = "/s 2020-11-02";
         LocalDateTime expected = DateParser.parseDate("2020-11-02");
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         LocalDateTime extractedDate = parser.extractStartDates(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -176,7 +176,7 @@ public class DietManagerParserTest {
         String input = "/e 2020-11-11 /t lunch";
         LocalDateTime expected = DateParser.parseDate("0001-01-01");
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         LocalDateTime extractedDate = parser.extractStartDates(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -186,7 +186,7 @@ public class DietManagerParserTest {
     void extractStartDates_invalidDateInput_throwInvalidDateFormatException() throws InvalidCommandFormatException {
         String input = "/s 2131-14-51";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         assertThrows(InvalidDateFormatException.class, () ->
                 parser.extractStartDates(parsedParams, message));
@@ -198,7 +198,7 @@ public class DietManagerParserTest {
         String input = "/e 2020-11-02";
         LocalDateTime expected = DateParser.parseDate("2020-11-02");
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         LocalDateTime extractedDate = parser.extractEndDates(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -210,7 +210,7 @@ public class DietManagerParserTest {
         String input = "/s 2020-11-11 /t lunch";
         LocalDateTime expected = DateParser.parseDate("9999-12-12");
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         LocalDateTime extractedDate = parser.extractEndDates(parsedParams, message);
         assertEquals(expected, extractedDate);
@@ -220,7 +220,7 @@ public class DietManagerParserTest {
     void extractEndDates_invalidDateInput_throwInvalidDateFormatException() throws InvalidCommandFormatException {
         String input = "/e 2131-14-51";
         StringBuilder message = new StringBuilder();
-        DietManagerParser parser = new DietManagerParser();
+        MedicationManagerParser parser = new MedicationManagerParser();
         HashMap<String, String> parsedParams = parser.extractDietManagerCommandTagAndInfo("search", input);
         assertThrows(InvalidDateFormatException.class, () ->
                 parser.extractEndDates(parsedParams, message));

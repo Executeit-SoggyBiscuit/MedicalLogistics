@@ -11,9 +11,9 @@ import exceptions.diet.InvalidSearchDateException;
 import exceptions.profile.InvalidCommandFormatException;
 import logger.SchwarzeneggerLogger;
 import logic.commands.CommandResult;
-import logic.parser.DietManagerParser;
+import logic.parser.MedicationManagerParser;
 import storage.diet.DietStorage;
-import ui.diet.dietmanager.DietManagerUi;
+import ui.diet.dietmanager.MedicationManagerUi;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -30,8 +30,8 @@ import static seedu.duke.Constants.COMMAND_WORD_END;
 public class DietManager {
 
     private CommandLib cl;
-    private DietManagerParser parser;
-    private DietManagerUi dietManagerUi;
+    private MedicationManagerParser parser;
+    private MedicationManagerUi dietManagerUi;
     private DietStorage storage;
     private static Logger logger = SchwarzeneggerLogger.getInstanceLogger();
 
@@ -42,8 +42,8 @@ public class DietManager {
         storage = new DietStorage();
         cl = new CommandLib();
         cl.initDietManagerCl();
-        parser = new DietManagerParser();
-        dietManagerUi = new DietManagerUi();
+        parser = new MedicationManagerParser();
+        dietManagerUi = new MedicationManagerUi();
     }
 
     /**

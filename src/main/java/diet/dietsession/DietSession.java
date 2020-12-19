@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 
 import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
 
-//@@author zsk612
 /**
  * A class that is responsible for interacting with user in Diet Session.
  */

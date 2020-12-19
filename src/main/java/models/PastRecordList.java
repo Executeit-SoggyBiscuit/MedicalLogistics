@@ -4,7 +4,6 @@ import exceptions.InvalidDateFormatException;
 import exceptions.SchwarzeneggerException;
 import exceptions.workout.workoutmanager.SchwIoException;
 import logger.SchwarzeneggerLogger;
-import logic.parser.WorkoutManagerParser;
 import storage.workout.WorkOutManagerStorage;
 
 import java.io.File;

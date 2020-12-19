@@ -1,7 +1,5 @@
 package profile;
 
-import models.Profile;
-
 import static profile.Constants.CALORIES_LOWER_BOUND;
 import static profile.Constants.HEIGHT_LOWER_BOUND;
 import static profile.Constants.HEIGHT_UPPER_BOUND;
