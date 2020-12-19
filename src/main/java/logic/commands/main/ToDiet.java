@@ -1,6 +1,6 @@
 package logic.commands.main;
 
-import Medication.Medicationmanager.MedicationManager;
+import Medication.Medicationmanager.LocationManager;
 import exceptions.EndException;
 import exceptions.SchwarzeneggerException;
 import logic.commands.Command;
@@ -30,8 +30,8 @@ public class ToDiet extends Command {
             ui.showWarning("\"diet\" command does not take in parameters");
         }
 
-        MedicationManager medicationManager = new MedicationManager();
-        medicationManager.start();
+        LocationManager locationManager = new LocationManager();
+        locationManager.start();
         return new CommandResult("", ExecutionResult.OK);
     }
 }

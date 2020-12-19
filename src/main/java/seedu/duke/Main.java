@@ -1,7 +1,6 @@
 package seedu.duke;
 
-import Medication.Medicationmanager.MedicationManager;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import Medication.Medicationmanager.LocationManager;
 import geocoder.GeocodeResult;
 import geocoder.Geocoder;
 import logger.SchwarzeneggerLogger;
@@ -50,6 +49,6 @@ public class Main {
         }
         formattedAddress.trim();
         System.out.println(formattedAddress);
-        new MedicationManager().start();
+        new LocationManager().start();
     }
 }

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 import static seedu.duke.Constants.COMMAND_WORD_END;
 
-public class MedicationManager {
+public class LocationManager {
 
     private CommandLib cl;
     private MedicationManagerParser parser;
@@ -29,7 +29,7 @@ public class MedicationManager {
     /**
      * Constructs MedicationManager and initializes command library for MedicationManager.
      */
-    public MedicationManager() {
+    public LocationManager() {
         storage = new Storage();
         cl = new CommandLib();
         cl.initMedicationManagerCl();
