@@ -60,6 +60,6 @@ public class Main {
         DistResults distResults = distMatrix.getClient(location, locationInfos);
         System.out.println(distResults.getRows().get(0).getElements().get(0).getDistance().get(0).getValue());
 
-        new MedicationManager().start();
+        //new MedicationManager().start();
     }
 }
