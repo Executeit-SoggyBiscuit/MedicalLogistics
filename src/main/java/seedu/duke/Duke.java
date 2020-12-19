@@ -1,17 +1,23 @@
 package seedu.duke;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.EndException;
 import exceptions.ExceptionHandler;
 import exceptions.SchwarzeneggerException;
 import exceptions.profile.InvalidSaveFormatException;
+import geocoder.GeocodeResult;
+import geocoder.Geocoder;
 import logger.SchwarzeneggerLogger;
 import logic.commands.Command;
 import logic.commands.CommandLib;
 import logic.parser.CommonParser;
 import models.Profile;
+import org.apache.commons.lang3.ArrayUtils;
 import storage.profile.ProfileStorage;
 import ui.CommonUi;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static logic.parser.CommonParser.COMMAND_ARGS_INDEX;
@@ -68,6 +74,16 @@ public class Duke {
         Profile profile;
 
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            Geocoder geocoder = new Geocoder();
+
+            GeocodeResult response = geocoder.geocodeSync("nus");
+            for(int i=0;i<response.getResults().size();i++){
+                for(int j=0;j<response.getResults().get(i).getAddressComponents().size();j++) {
+                    System.out.println(response.getResults().get(i).getAddressComponents().get(j).getLongName());
+                }
+            }
+
             ui.showToUser(LOGO);
             profile = new ProfileStorage(PATH_TO_PROFILE_FOLDER, PATH_TO_PROFILE_FILE).loadData();
             ui.showToUser(String.format(MESSAGE_WELCOME_EXISTING_USER, profile.getName()));
