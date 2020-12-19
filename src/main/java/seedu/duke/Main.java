@@ -53,12 +53,25 @@ public class Main {
         response = geocoder.geocodeSync("nus","sg");
         formattedAddress = response.getResults().get(0).getFormattedAddress();
         LocationInfo location2 = new LocationInfo(formattedAddress,"nus", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+        response = geocoder.geocodeSync("nuh","sg");
+        formattedAddress = response.getResults().get(0).getFormattedAddress();
+        LocationInfo location3 = new LocationInfo(formattedAddress,"nus", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+        response = geocoder.geocodeSync("sim","sg");
+        formattedAddress = response.getResults().get(0).getFormattedAddress();
+        LocationInfo location4 = new LocationInfo(formattedAddress,"nus", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
         ArrayList<LocationInfo> locationInfos = new ArrayList<LocationInfo>();
         locationInfos.add(location2);
+        locationInfos.add(location3);
+        locationInfos.add(location4);
+
+
         DistMatrix distMatrix = new DistMatrix();
 
         DistResults distResults = distMatrix.getClient(location, locationInfos);
-        System.out.println(distResults.getRows().get(0).getElements().get(0).getDistance().get(0).getValue());
+        for (int i = 0;i<distResults.getRows().get(0).getElements().size();i++){
+            System.out.println(distResults.getRows().get(0).getElements().get(i).getDistance().getText());
+        }
+
 
         //new MedicationManager().start();
     }

@@ -10,9 +10,9 @@ public class DistResults {
     @JsonProperty("destination_addresses")
     List<String> destinationAddresses;
     @JsonProperty("origin_addresses")
-    String originAddress;
+    List<String> originAddress;
     @JsonProperty("rows")
-    List<rows> rowsList;
+    List<distMatrix.rows> rows;
     String status;
 
     public DistResults(){
@@ -23,12 +23,12 @@ public class DistResults {
         return destinationAddresses;
     }
 
-    public String getOriginAddress(){
+    public List<String> getOriginAddress(){
         return originAddress;
     }
 
     public List<rows> getRows(){
-        return rowsList;
+        return rows;
     }
 
     public String getStatus(){
@@ -39,12 +39,12 @@ public class DistResults {
         this.destinationAddresses = destination_Addresses;
     }
 
-    public void setOriginAddress(String originAddress){
+    public void setOriginAddress(List<String> originAddress){
         this.originAddress = originAddress;
     }
 
     public void setRows(List<rows> rowsList){
-        this.rowsList = rowsList;
+        this.rows = rowsList;
     }
 
     public  void setStatus(String status){

@@ -1,19 +1,22 @@
 package distMatrix;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class elements {
-    List<distance> distance;
-    List<duration> duration;
+    @JsonProperty("distance")
+    Distance distance;
+    @JsonProperty("duration")
+    Duration duration;
     String status;
-    public void setDistance(List<distance> distance){
+    public void setDistance(Distance distance){
         this.distance = distance;
     }
 
-    public void setDuration(List<duration> duration){
+    public void setDuration(Duration duration){
         this.duration = duration;
     }
 
@@ -21,11 +24,11 @@ public class elements {
         this.status = status;
     }
 
-    public List<distance> getDistance(){
+    public Distance getDistance(){
         return distance;
     }
 
-    public List<duration> getDuration(){
+    public Duration getDuration(){
         return duration;
     }
 
