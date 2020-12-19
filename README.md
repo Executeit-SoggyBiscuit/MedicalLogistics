@@ -1,6 +1,6 @@
 # Duke project template
 
-The Schwarzenegger is a desktop command line interface-based app for managing all your needs regarding fitness. With the built-in personal assistant, you are able to track your daily workout and diet sessions based on your profile. If you can type fast, The Schwarzenegger can help you maximise your efficiency for maintaining fitness.
+The Soggy Biscuit is a desktop command line interface-based app for managing your vaccination supply chain. With the built-in personal assistant, you are able to track the transportation and storage of different vaccines easily. The Soggy Biscuit can help you maximise your efficiency for tracking vaccine logistics.
 
 ## Setting up in Intellij
 
