@@ -44,7 +44,7 @@ public class Geocoder {
 
         String encodedQuery = URLEncoder.encode(query,"UTF-8");
         String requestUri = GEOCODING_RESOURCE + "?address=" + encodedQuery + "&key=" + API_KEY;
-
+        System.out.println(requestUri);
         GeocodeResult result = requestHttp(requestUri);
 
         if(result.getStatus() == "OK"){

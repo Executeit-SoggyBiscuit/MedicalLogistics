@@ -1,6 +1,7 @@
 package distMatrix;
 
 
+import classes.DistanceInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import geocoder.GeocodeResult;
 import classes.LocationInfo;
@@ -20,7 +21,7 @@ public class DistMatrix {
 
     public static String base_url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric";
 
-    public ArrayList<> getClient(LocationInfo origin, ArrayList<LocationInfo> destination) throws IOException,
+    public DistanceInfo getClient(LocationInfo origin, ArrayList<LocationInfo> destination) throws IOException,
             InterruptedException {
 
         String encodedOrigin = URLEncoder.encode(origin.getLatlong(),"UTF-8");
@@ -50,7 +51,7 @@ public class DistMatrix {
 
         GeocodeResult result = requestHttp(requestUri);
 
-        return retrofit;
+        return new DistanceInfo();
     }
 
     private GeocodeResult requestHttp(String requestUrl) throws IOException, InterruptedException {
