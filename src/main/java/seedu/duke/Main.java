@@ -41,12 +41,15 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException  {
         Geocoder geocoder = new Geocoder();
 
-        GeocodeResult response = geocoder.geocodeSync("nus");
+        GeocodeResult response = geocoder.geocodeSync("ntu","sg");
+        String formattedAddress = "";
         for (int i = 0; i < response.getResults().size(); i++) {
             for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
-                System.out.println(response.getResults().get(i).getAddressComponents().get(j).getLongName());
+                formattedAddress += response.getResults().get(i).getAddressComponents().get(j).getLongName() + " ";
             }
         }
+        formattedAddress.trim();
+        System.out.println(formattedAddress);
         new MedicationManager().start();
     }
 }
