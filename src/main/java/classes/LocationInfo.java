@@ -2,11 +2,19 @@ package classes;
 
 import Medication.Medicationmanager.Medication;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import exceptions.InvalidCommandWordException;
+import exceptions.InvalidDateFormatException;
+import exceptions.diet.InvalidSearchDateException;
+import logic.commands.Command;
 import logic.commands.CommandLib;
+import logic.commands.CommandResult;
+import logic.parser.DietSessionParser;
 import storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
 
 public class LocationInfo {
     private String name;
@@ -20,6 +28,7 @@ public class LocationInfo {
     private final Storage storage;
     private transient CommandLib cl;
     private final ArrayList<Medication> medList;
+    private final DietSessionParser parser = new DietSessionParser();
 
     public LocationInfo(String name, String address, String latitude, String longitude) {
         this.name = name;
@@ -33,7 +42,7 @@ public class LocationInfo {
     }
 
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -43,35 +52,35 @@ public class LocationInfo {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-        if(longitude!=null){
+        if (longitude != null) {
             latlong = latitude + "," + longitude;
         }
     }
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
-        if(latitude!=null){
+        if (latitude != null) {
             latlong = latitude + "," + longitude;
         }
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
 
-    public String getLatitude(){
-        return  latitude;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public String getLongitude(){
+    public String getLongitude() {
         return longitude;
     }
 
-    public String getLatlong(){
+    public String getLatlong() {
         return latlong;
     }
 
@@ -81,7 +90,7 @@ public class LocationInfo {
         cl.initMedicationSessionCl();
         this.name = name;
         // save the file upon creation
-        saveToFile(storage, this);
+        saveToFile(PATH_TO_DIET_FOLDER, storage, this);
         dietSessionInputLoop();
     }
 
@@ -91,19 +100,20 @@ public class LocationInfo {
     private void dietSessionInputLoop() {
         String input = "";
 
-        input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
-
+        //input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
+        System.out.println("Diet Menu > Diet Session " + name + " >>> ");
         while (!input.equals("end")) {
 
             try {
                 processCommand(input);
             } catch (NullPointerException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
+                //dietSessionUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
                 break;
-            } catch (InvalidCommandWordException e) {
-                dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
+            } catch (InvalidCommandWordException | InvalidSearchDateException | InvalidDateFormatException e) {
+                //dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
-            input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
+            //input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
+            System.out.println("Diet Menu > Diet Session " + name + " >>> ");
         }
     }
 
@@ -113,37 +123,33 @@ public class LocationInfo {
      * @param input user input for command
      * @throws NullPointerException handles null pointer exception
      */
-    private void processCommand(String input) throws NullPointerException, InvalidCommandWordException {
-        String[] commParts = parser.parse(input);
-        Command command = cl.getCommand(commParts[0]);
-        command.execute(commParts[1].trim(), medList, storage);
-        saveToFile(storage, this);
-    }
+    private void processCommand(String input) throws NullPointerException, InvalidCommandWordException,
+            InvalidSearchDateException, InvalidDateFormatException {
 
-    public double getTotalCalories() {
-        double totalCalories = 0;
-        for (int i = 0; i < medList.size(); i++) {
-            totalCalories += medList.get(i).getCalories();
-        }
-        return totalCalories;
+
+        String[] commParts = parser.parseCommand(input);
+        Command command = cl.getCommand(commParts[0]);
+        CommandResult commandResult = command.execute(commParts[1].trim(), storage);
+        //dietSessionUi.showToUser(commandResult.getFeedbackMessage());
+        saveToFile(PATH_TO_DIET_FOLDER, storage, this);
     }
 
 
     /**
      * Constructs method to save changes to storage file.
      *
+     * @param filePath string for file path
      * @param storage storage for diet manager
      * @param ds dietSession that is being changed
      */
-    private void saveToFile(Storage storage, LocationInfo ds) {
+    public void saveToFile(String filePath, Storage storage, LocationInfo ds) {
         try {
-            storage.init(ds.getName().toString());
-            storage.writeToStorageDietSession(ds.getName().toString(), ds);
-            logger.log(Level.INFO, "Diet session successfully saved");
+            storage.init(filePath, ds.getName().toString());
+            storage.writeToStorageDietSession(filePath, ds.getName().toString(), ds);
+            //logger.log(Level.INFO, "Diet session successfully saved");
         } catch (IOException e) {
-            logger.log(Level.WARNING, "save profile session failed");
-            dietSessionUi.showToUser("Failed to save your diet session!");
+            //logger.log(Level.WARNING, "save profile session failed");
+            //dietSessionUi.showToUser("Failed to save your diet session!");
         }
-    }*/
-
+    }
 }
