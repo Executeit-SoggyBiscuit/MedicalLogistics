@@ -6,7 +6,7 @@ import ui.CommonUi;
 /**
  * A class that contains templates of message to show to user.
  */
-public class DietSessionUi extends CommonUi {
+public class MedicationSessionUi extends CommonUi {
 
     public static final String DIET_INPUT_PROMPT_EDIT = "Diet Menu > Diet Session ";
     public static final String DIET_INPUT_PROMPT_NEW = "Diet Menu > New Diet Session";

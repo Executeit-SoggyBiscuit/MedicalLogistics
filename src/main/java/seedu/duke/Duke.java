@@ -86,7 +86,6 @@ public class Duke {
 
             ui.showToUser(LOGO);
             profile = new ProfileStorage(PATH_TO_PROFILE_FOLDER, PATH_TO_PROFILE_FILE).loadData();
-            ui.showToUser(String.format(MESSAGE_WELCOME_EXISTING_USER, profile.getName()));
         } catch (SchwarzeneggerException e) {
             if (e instanceof InvalidSaveFormatException) {
                 ui.showToUser(MESSAGE_WELCOME_WITH_INVALID_SAVE_FORMAT);
