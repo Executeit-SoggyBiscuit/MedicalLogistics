@@ -21,13 +21,15 @@ public class LocationInfo {
     private transient CommandLib cl;
     private final ArrayList<Medication> medList;
 
-    public LocationInfo(String name, String address) {
+    public LocationInfo(String name, String address, String latitude, String longitude) {
         this.name = name;
         this.address = address;
         this.cl = new CommandLib();
         cl.initMedicationSessionCl();
         storage = new Storage();
         this.medList = new ArrayList<>();
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -142,6 +144,6 @@ public class LocationInfo {
             logger.log(Level.WARNING, "save profile session failed");
             dietSessionUi.showToUser("Failed to save your diet session!");
         }
-    }
+    }*/
 
 }

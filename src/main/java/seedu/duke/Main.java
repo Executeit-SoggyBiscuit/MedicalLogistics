@@ -1,8 +1,11 @@
 package seedu.duke;
 
 import Medication.Medicationmanager.MedicationManager;
+import classes.DistanceInfo;
 import classes.LocationInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import distMatrix.DistMatrix;
+import distMatrix.DistResults;
 import geocoder.GeocodeResult;
 import geocoder.Geocoder;
 import logger.SchwarzeneggerLogger;
@@ -11,6 +14,7 @@ import logic.parser.CommonParser;
 import ui.CommonUi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
@@ -40,26 +44,22 @@ public class Main {
      * @param args Unused in Schwarzenegger.
      */
     public static void main(String[] args) throws IOException, InterruptedException  {
+        Geocoder geocoder = new Geocoder();
 
         GeocodeResult response = geocoder.geocodeSync("ntu","sg");
         String formattedAddress = "";
-        if(userinput==allnumber) {
+        formattedAddress = response.getResults().get(0).getFormattedAddress();
+        LocationInfo location = new LocationInfo(formattedAddress,"ntu", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
 
-            for (int i = 0; i < response.getResults().size(); i++) {
-                for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
-                    formattedAddress += response.getResults().get(i).getAddressComponents().get(j).getLongName() + " ";
-                }
-            }
-            formattedAddress.trim();
-        }else{
-            formattedAddress = response.getResults().get(0).getFormattedAddress();
-        }
+        response = geocoder.geocodeSync("nus","sg");
+        formattedAddress = response.getResults().get(0).getFormattedAddress();
+        LocationInfo location2 = new LocationInfo(formattedAddress,"nus", response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude(),response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+        ArrayList<LocationInfo> locationInfos = new ArrayList<LocationInfo>();
+        locationInfos.add(location2);
+        DistMatrix distMatrix = new DistMatrix();
 
-        LocationInfo location = new LocationInfo();
-        location.setAddress(formattedAddress);
-        location.setName("ntu");
-        location.setLatitude(response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude());
-        location.setLongitude(response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+        DistResults distResults = distMatrix.getClient(location, locationInfos);
+        System.out.println(distResults.getRows().get(0).getElements().get(0).getDistance().get(0).getValue());
 
         new MedicationManager().start();
     }

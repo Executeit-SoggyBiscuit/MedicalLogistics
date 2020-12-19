@@ -21,7 +21,7 @@ public class DistMatrix {
 
     public static String base_url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric";
 
-    public DistanceInfo getClient(LocationInfo origin, ArrayList<LocationInfo> destination) throws IOException,
+    public DistResults getClient(LocationInfo origin, ArrayList<LocationInfo> destination) throws IOException,
             InterruptedException {
 
         String encodedOrigin = URLEncoder.encode(origin.getLatlong(),"UTF-8");
@@ -36,7 +36,7 @@ public class DistMatrix {
                 }
             }
             requestUri = requestUri + "&key=" + GOOGLE_PLACE_API_KEY;
-            GeocodeResult result = requestHttp(requestUri);
+            DistResults result = requestHttp(requestUri);
 
         }else{
             for (int i = 0; i < 80; i++) {
@@ -49,12 +49,12 @@ public class DistMatrix {
             }
         }
 
-        GeocodeResult result = requestHttp(requestUri);
+        DistResults result = requestHttp(requestUri);
 
-        return new DistanceInfo();
+        return result;
     }
 
-    private GeocodeResult requestHttp(String requestUrl) throws IOException, InterruptedException {
+    private DistResults requestHttp(String requestUrl) throws IOException, InterruptedException {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest geocodingRequest = HttpRequest.newBuilder().GET().uri(URI.create(requestUrl))
@@ -65,7 +65,7 @@ public class DistMatrix {
 
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue((String) geocodingResponse.body(),
-                GeocodeResult.class);
+                DistResults.class);
     }
 
 }
