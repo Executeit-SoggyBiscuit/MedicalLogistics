@@ -25,16 +25,7 @@ public class Main {
     /**
      * Constructs Main object.
      */
-    private Main() throws IOException, InterruptedException {
-        Geocoder geocoder = new Geocoder();
-
-        GeocodeResult response = geocoder.geocodeSync("nus");
-        for (int i = 0; i < response.getResults().size(); i++) {
-            for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
-                System.out.println(response.getResults().get(i).getAddressComponents().get(j).getLongName());
-            }
-        }
-
+    private Main(){
         logger = SchwarzeneggerLogger.getInstanceLogger();
         cl = new CommandLib();
         cl.initMainMenuCl();
@@ -47,7 +38,15 @@ public class Main {
      *
      * @param args Unused in Schwarzenegger.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException  {
+        Geocoder geocoder = new Geocoder();
+
+        GeocodeResult response = geocoder.geocodeSync("nus");
+        for (int i = 0; i < response.getResults().size(); i++) {
+            for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
+                System.out.println(response.getResults().get(i).getAddressComponents().get(j).getLongName());
+            }
+        }
         new MedicationManager().start();
     }
 }
