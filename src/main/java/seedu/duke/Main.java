@@ -1,6 +1,7 @@
 package seedu.duke;
 
 import Medication.Medicationmanager.MedicationManager;
+import classes.LocationInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import geocoder.GeocodeResult;
 import geocoder.Geocoder;
@@ -39,17 +40,29 @@ public class Main {
      * @param args Unused in Schwarzenegger.
      */
     public static void main(String[] args) throws IOException, InterruptedException  {
+
         Geocoder geocoder = new Geocoder();
 
         GeocodeResult response = geocoder.geocodeSync("ntu","sg");
         String formattedAddress = "";
-        for (int i = 0; i < response.getResults().size(); i++) {
-            for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
-                formattedAddress += response.getResults().get(i).getAddressComponents().get(j).getLongName() + " ";
+        if(userinput==allnumber) {
+
+            for (int i = 0; i < response.getResults().size(); i++) {
+                for (int j = 0; j < response.getResults().get(i).getAddressComponents().size(); j++) {
+                    formattedAddress += response.getResults().get(i).getAddressComponents().get(j).getLongName() + " ";
+                }
             }
+            formattedAddress.trim();
+        }else{
+            formattedAddress = response.getResults().get(0).getFormattedAddress();
         }
-        formattedAddress.trim();
-        System.out.println(formattedAddress);
+
+        LocationInfo location = new LocationInfo();
+        location.setAddress(formattedAddress);
+        location.setName("ntu");
+        location.setLatitude(response.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude());
+        location.setLongitude(response.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
+
         new MedicationManager().start();
     }
 }
