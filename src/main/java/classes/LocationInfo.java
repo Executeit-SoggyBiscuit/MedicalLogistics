@@ -144,6 +144,6 @@ public class LocationInfo {
             logger.log(Level.WARNING, "save profile session failed");
             dietSessionUi.showToUser("Failed to save your diet session!");
         }
-    }*/
+    }
 
 }
