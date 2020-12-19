@@ -1,6 +1,7 @@
 package logic.commands.diet.dietsession;
 
 import Location.Medication;
+import classes.ArrayListMedication;
 import logic.commands.Command;
 import logic.parser.DietSessionParser;
 import logic.commands.CommandResult;
@@ -68,7 +69,7 @@ public class MedicationAdd extends Command {
             int MedicationIndex = Integer.parseInt(input);
 
             if( MedicationIndex == 0) {
-                addMedication(userInput, MedicationList);
+                addMedication(userInput);
             }
 
             //ask quantity
@@ -82,16 +83,16 @@ public class MedicationAdd extends Command {
         return new CommandResult(result);
     }
 
-    private int addMedication(Scanner in, ArrayList<Medication> MedicationList) {
+    private int addMedication(Scanner in) {
         int index = 0;
         String name;
 
         do {
             name = in.nextLine();
-        } while(checkExistence(name, MedicationList));
+        } while(checkExistence(name, ArrayListMedication.getInstance().getArray()));
 
         Medication temp = new Medication(name, 0);
-        MedicationList.add(temp);
+        ArrayListMedication.getInstance().getArray().add(temp);
         System.out.println("You have added " + name + " to the list");
         logger.log(Level.INFO, "Added medication to arraylist");
 
