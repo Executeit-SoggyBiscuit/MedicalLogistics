@@ -1,0 +1,13 @@
+@startuml
+!define PLANTUML_HOME %dirpath()/../../umldiagram
+!include PLANTUML_HOME/style.puml
+
+mainframe <b>sd</b> parse user input in Diet Session Menu
+
+    DietSession -> DietSessionParser ++ : parseCommand(input)
+    DietSessionParser --> DietSession -- : parsedInput
+
+    DietSession -> CommandLib ++ : getCommand(parsedInput)
+    CommandLib --> DietSession -- : command
+
+@enduml
