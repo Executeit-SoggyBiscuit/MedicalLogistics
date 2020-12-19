@@ -62,47 +62,69 @@ public class MedicationAdd extends Command {
      */
 
 
-    public CommandResult createMedication (String input, ArrayList<Medication> MedicationList, Storage storage, Integer index) {
+    public CommandResult execute (String input, ArrayList<Medication> MedicationList, Storage storage, Integer index) {
         DietSessionParser parser = new DietSessionParser();
         String result = "";
             assert !input.isEmpty();
             StringBuilder userOutput = new StringBuilder();
-
-
-
-            Medication temp = new Medication(input, 0);
-            //ask quantity
-
             Scanner userInput = new Scanner(System.in);
-            System.out.print("Quantity to add: ");
-            userInput.nextLine();
-            System.out.println("\n" + "You have added " + userInput);
+            int MedicationIndex = Integer.parseInt(input);
 
-            MedicationList.add(temp);
-            userOutput.append("You have added " + temp.getName());
+            if( MedicationIndex == 0) {
+                addMedication(userInput, MedicationList);
+            }
+
+            //ask quantity
+            addQuantity(userInput);
+
+            int quantity = addQuantity(userInput);
+            System.out.println("\n" + "You have added " + Integer.toString(quantity));
+
+
             result = userOutput.toString();
-            logger.log(Level.INFO, "Added medication to arraylist");
         return new CommandResult(result);
     }
 
-    public boolean checkExistence(String inputName, ArrayList<Medication> MedicationList){
+    private int addMedication(Scanner in, ArrayList<Medication> MedicationList) {
+        int index = 0;
+        String name;
+
+        do {
+            name = in.nextLine();
+        } while(checkExistence(name, MedicationList));
+
+        Medication temp = new Medication(name, 0);
+        MedicationList.add(temp);
+        System.out.println("You have added " + name + " to the list");
+        logger.log(Level.INFO, "Added medication to arraylist");
+
+        return index;
+    }
+
+    public boolean checkExistence(String inputName, ArrayList<Medication> MedicationList) {
         boolean isExist = false;
 
-        for(int i = 0;i < MedicationList.size(); i++) {
+        for(int i = 0; i < MedicationList.size(); i++) {
             if(MedicationList.get(i).getName().equals(inputName)) {
                 isExist = true;
+                System.out.println("The medication is already in the list.");
                 break;
             }
         }
-
         return isExist;
     }
 
-    private void addQuantity(String input){
+    private int addQuantity(Scanner in) {
+        String input;
         int number = 0;
         while(number <= 0) {
+            System.out.print("Quantity to add: ");
+            input = in.nextLine();
             number =  convertStringToNumber(input);
+            System.lineSeparator();
         }
+
+        return number;
     }
 
     private int convertStringToNumber(String input) {
