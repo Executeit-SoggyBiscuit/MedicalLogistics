@@ -4,9 +4,7 @@ import exceptions.InvalidCommandWordException;
 import exceptions.InvalidDateFormatException;
 import exceptions.SchwarzeneggerException;
 import exceptions.diet.InvalidSearchDateException;
-import exceptions.profile.InvalidCommandFormatException;
 import logger.SchwarzeneggerLogger;
-import models.Food;
 import storage.Storage;
 import ui.CommonUi;
 
@@ -29,10 +27,10 @@ public abstract class Command {
         return new CommandResult();
     }
     public CommandResult execute(String input, Storage storage) throws InvalidCommandWordException,
-            InvalidCommandFormatException, InvalidDateFormatException, InvalidSearchDateException {
+            InvalidDateFormatException, InvalidSearchDateException {
         return new CommandResult();
     }
-    public CommandResult execute(String input, ArrayList<Food> foodList,
+    public CommandResult execute(String input,
                                  Storage storage, Integer index) throws InvalidCommandWordException {
         return new CommandResult();
     }

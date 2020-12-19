@@ -5,7 +5,6 @@ import exceptions.InvalidCommandWordException;
 import exceptions.InvalidDateFormatException;
 import exceptions.SchwarzeneggerException;
 import exceptions.diet.InvalidSearchDateException;
-import exceptions.profile.InvalidCommandFormatException;
 import logger.SchwarzeneggerLogger;
 import logic.commands.Command;
 import logic.commands.CommandLib;
@@ -80,7 +79,7 @@ public class MedicationManager {
             Command command = cl.getCommand(commParts[0]);
             CommandResult commandResult = command.execute(commParts[1].trim(), storage);
             MedicationManagerUi.showToUser(commandResult.getFeedbackMessage());
-        } catch (ArrayIndexOutOfBoundsException | InvalidCommandFormatException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             logger.log(Level.WARNING, "Invalid command in Medication session");
             throw new InvalidCommandWordException();
         } catch (InvalidDateFormatException e) {

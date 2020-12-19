@@ -14,7 +14,6 @@ import logic.commands.CommandLib;
 import logic.commands.CommandResult;
 import logic.parser.CommonParser;
 import logic.parser.DietSessionParser;
-import models.Food;
 import storage.Storage;
 import ui.diet.dietsession.MedicationSessionUi;
 
@@ -68,7 +67,7 @@ public class Medication {
         String[] commParts = parser.parseCommand(input);
         CommandLib cl = new CommandLib();
         Command command = cl.getCommand(commParts[0]);
-        CommandResult commandResult = command.execute(commParts[1].trim(), foodList, storage, index);
+        CommandResult commandResult = command.execute(commParts[1].trim(), storage, index);
         medicationSessionUi.showToUser(commandResult.getFeedbackMessage());
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
     }
@@ -103,17 +102,6 @@ public class Medication {
             } else {
                 input = medicationSessionUi.getCommand("Diet Menu > Diet Session " + index);
             }
-        }
-    }
-
-    public void save(Medication med) {
-        String filePath;
-        try {
-            filePath = System.getProperty("user.dir");
-            storage.init(filePath, med.getName());
-            storage.saveMedication(filePath, med.getName(), med);
-        } catch (IOException e) {
-            System.out.println("save failed...");
         }
     }
 
