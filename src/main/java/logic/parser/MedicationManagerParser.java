@@ -28,7 +28,7 @@ public class MedicationManagerParser extends CommonParser {
     public int extractNewQuantity(HashMap<String, String> parsedParams, StringBuilder extractDateMessage)
             throws IllegalStateException {
         try {
-            String quantityString = parsedParams.get("/d").trim();
+            String quantityString = parsedParams.get("/q").trim();
             if (!quantityString.isEmpty()) {
                 return Integer.parseInt(quantityString);
             } else {
@@ -54,18 +54,32 @@ public class MedicationManagerParser extends CommonParser {
     public String extractNewName(HashMap<String, String> parsedParams, StringBuilder extractMealMessage)
             throws NullPointerException {
         try {
-            String tag = parsedParams.get("/t").trim();
+            String tag = parsedParams.get("/n").trim();
             if (tag.isEmpty()) {
-                extractMealMessage.append("Name input is empty, "
-                        + "and it is replaced with \"unspecified\".");
-                return "unspecified";
+                extractMealMessage.append("Name input is empty\n");
+                return null;
             } else {
                 return tag;
             }
         } catch (NullPointerException e) {
-            extractMealMessage.append("No Name is detected, "
-                    + "and the session is tagged as \"unspecified\".");
-            return "unspecified";
+            extractMealMessage.append("No Name is detected\n");
+            return null;
+        }
+    }
+
+    public String extractNewAddress(HashMap<String, String> parsedParams, StringBuilder extractMealMessage)
+            throws NullPointerException {
+        try {
+            String tag = parsedParams.get("/a").trim();
+            if (tag.isEmpty()) {
+                extractMealMessage.append("Address input is empty\n");
+                return null;
+            } else {
+                return tag;
+            }
+        } catch (NullPointerException e) {
+            extractMealMessage.append("No Name is detected\n");
+            return null;
         }
     }
 
