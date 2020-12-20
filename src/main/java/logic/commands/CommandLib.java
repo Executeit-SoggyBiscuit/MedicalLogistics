@@ -55,7 +55,7 @@ public class CommandLib {
     public void initMedicationManagerCl() {
         library.put(COMMAND_WORD_LIST, new MedicationSessionList());
         library.put(COMMAND_WORD_NEW, new MedicationSessionCreate());
-        library.put(COMMAND_WORD_HELP, new logic.commands.medication.medicationmanager.MedicationSessionHelp());
+        //library.put(COMMAND_WORD_HELP, new logic.commands.medication.medicationmanager.MedicationSessionHelp());
         library.put(COMMAND_WORD_CLEAR, new MedicationSessionClear());
         library.put(COMMAND_WORD_SEARCH, new MedicationSessionSearch());
         library.put(COMMAND_WORD_EDIT, new MedicationSessionEdit());
