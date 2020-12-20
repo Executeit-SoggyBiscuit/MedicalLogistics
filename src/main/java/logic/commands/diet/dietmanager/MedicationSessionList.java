@@ -41,7 +41,7 @@ public class MedicationSessionList extends Command {
         return new CommandResult(message);
     }
 
-    private String formatList(File[] listOfFiles, Storage storage) {
+    /*private String formatList(File[] listOfFiles, Storage storage) {
         ArrayList<File> fileArrayList = new ArrayList<>();
         // converts all files in the array to an arraylist format
         Collections.addAll(fileArrayList, listOfFiles);
@@ -69,6 +69,7 @@ public class MedicationSessionList extends Command {
         returnString = infoBuilder.toString().trim();
         return returnString;
     }
+     */
 
     /**
      * Formats the row of text for each file.
@@ -83,5 +84,33 @@ public class MedicationSessionList extends Command {
                 fileArrayList.get(i).getName().replaceFirst("[.][^.]+$", "").split(" ", 2)[1],
                 fileArrayList.get(i).getName().replaceFirst("[.][^.]+$", "").split(" ", 2)[0]);
         return rowContent;
+    }
+
+
+    private String formatList(File[] listOfFiles, Storage storage) {
+        ArrayList<File> fileArrayList = new ArrayList<>();
+        // converts all files in the array to an arraylist format
+        Collections.addAll(fileArrayList, listOfFiles);
+        // converts the file names into a stream
+        ArrayList<String> fileNames = (ArrayList<String>) fileArrayList.stream()
+                .map(f -> f.getName().split(" ", 2)[1].trim()).collect(Collectors.toList());
+        // determine length of column for dynamic resizing
+        int descriptionMaxLenInt = Math.max(16,
+                fileNames.stream().max(Comparator.comparingInt(String::length)).get().length());
+
+        String descriptionFormat = "%-" + String.format("%d", descriptionMaxLenInt + 1) + "s";
+        String returnString = String.format("%-8s", "Index") + String.format(descriptionFormat, "Location Name")
+                 + LS;
+
+        StringBuilder infoBuilder = new StringBuilder(returnString);
+        String listDescriptionFormat = "%-" + String.format("%d", descriptionMaxLenInt);
+        // adds the contents of each diet session and consolidates it into table format
+        for (int i = 0; i < fileArrayList.size(); i++) {
+            String rowContent = formatRow(fileArrayList, listDescriptionFormat, i);
+            String row = String.format("%-8s", i + 1) + rowContent + LS;
+            infoBuilder.append(row);
+        }
+        returnString = infoBuilder.toString().trim();
+        return returnString;
     }
 }
