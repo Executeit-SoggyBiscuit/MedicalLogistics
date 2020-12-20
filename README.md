@@ -1,6 +1,6 @@
-# Duke project template
+# Execureit
 
-The Soggy Biscuit is a desktop command line interface-based app for managing your vaccination supply chain. With the built-in personal assistant, you are able to track the transportation and storage of different vaccines easily. The Soggy Biscuit can help you maximise your efficiency for tracking vaccine logistics.
+The Excureit is a desktop command line interface-based app for managing your vaccination supply chain. With the built-in personal assistant, you are able to track the transportation and storage of different vaccines easily. The Excureit can help you maximise your efficiency for tracking vaccine logistics.
 
 ## Setting up in Intellij
 
