@@ -13,6 +13,7 @@ import java.util.logging.Level;
 
 
 //@@author zsk612
+
 /**
  * A representation of the command for add commands in diet session.
  */
@@ -58,28 +59,26 @@ public class MedicationAdd extends Command {
     }
 
      */
-
-
-    public CommandResult execute (String input, ArrayList<Medication> MedicationList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> medicationList, Storage storage, Integer index) {
         DietSessionParser parser = new DietSessionParser();
         String result = "";
-            assert !input.isEmpty();
-            StringBuilder userOutput = new StringBuilder();
-            Scanner userInput = new Scanner(System.in);
-            int MedicationIndex = Integer.parseInt(input);
+        assert !input.isEmpty();
+        StringBuilder userOutput = new StringBuilder();
+        Scanner userInput = new Scanner(System.in);
+        int medicationIndex = Integer.parseInt(input);
 
-            if( MedicationIndex == 0) {
-                addMedication(userInput);
-            }
+        if (medicationIndex == 0) {
+            addMedication(userInput);
+        }
 
-            //ask quantity
-            addQuantity(userInput);
+        //ask quantity
+        addQuantity(userInput);
 
-            int quantity = addQuantity(userInput);
-            System.out.println("\n" + "You have added " + Integer.toString(quantity));
+        int quantity = addQuantity(userInput);
+        System.out.println("\n" + "You have added " + Integer.toString(quantity));
 
 
-            result = userOutput.toString();
+        result = userOutput.toString();
         return new CommandResult(result);
     }
 
@@ -89,7 +88,7 @@ public class MedicationAdd extends Command {
 
         do {
             name = in.nextLine();
-        } while(checkExistence(name, ArrayListMedication.getInstance().getArray()));
+        } while (checkExistence(name, ArrayListMedication.getInstance().getArray()));
 
         Medication temp = new Medication(name, 0);
         ArrayListMedication.getInstance().getArray().add(temp);
@@ -99,11 +98,11 @@ public class MedicationAdd extends Command {
         return index;
     }
 
-    public boolean checkExistence(String inputName, ArrayList<Medication> MedicationList) {
+    public boolean checkExistence(String inputName, ArrayList<Medication> medicationList) {
         boolean isExist = false;
 
-        for(int i = 0; i < MedicationList.size(); i++) {
-            if(MedicationList.get(i).getName().equals(inputName)) {
+        for (int i = 0; i < medicationList.size(); i++) {
+            if (medicationList.get(i).getName().equals(inputName)) {
                 isExist = true;
                 System.out.println("The medication is already in the list.");
                 break;
@@ -115,10 +114,10 @@ public class MedicationAdd extends Command {
     private int addQuantity(Scanner in) {
         String input;
         int number = 0;
-        while(number <= 0) {
+        while (number <= 0) {
             System.out.print("Quantity to add: ");
             input = in.nextLine();
-            number =  convertStringToNumber(input);
+            number = convertStringToNumber(input);
             System.lineSeparator();
         }
 
