@@ -20,48 +20,8 @@ import java.util.logging.Level;
  */
 public class MedicationAdd extends Command {
 
-    /**
-     * Overrides execute for add command to add food items.
-     *
-     * @param input user input for command
-     * @param foodList arraylist that stored all the food items
-     * @param storage storage for diet session
-     * @param index Integer variable that shows the index of the session
-     * @return An object CommandResult containing the executing status and feedback message to be displayed
-     *         to user.
-     */
-    /*
-    public CommandResult execute(String input, ArrayList<Medication> foodList, Storage storage, Integer index) {
-        DietSessionParser parser = new DietSessionParser();
-        String result = "";
-        try {
-            assert !input.isEmpty();
-            StringBuilder userOutput = new StringBuilder();
-            Double calories = parser.processFoodCalories(input);
-            Medication temp = new Medication(parser.processFoodName(input), (int) parser.processFoodCalories(input));
-            foodList.add(temp);
-            userOutput.append("Yay! You have added " + temp.toString());
-            result = userOutput.toString();
-            logger.log(Level.INFO, "Added food to arraylist");
-        } catch (IndexOutOfBoundsException e) {
-            result = MedicationSessionUi.MESSAGE_ADD_WRONG_FORMAT;
-            logger.log(Level.WARNING, "Wrong Add food item format");
-        } catch (NumberFormatException e) {
-            result = MedicationSessionUi.MESSAGE_WRONG_CALORIES;
-            logger.log(Level.WARNING, "Put calories in a wrong format");
-        } catch (NegativeCaloriesException e) {
-            result = MedicationSessionUi.MESSAGE_NEGATIVE_CALORIES;
-            logger.log(Level.WARNING, "Put negative calories");
-        } catch (NoNameException e) {
-            result = MedicationSessionUi.MESSAGE_NO_FOOD_NAME;
-            logger.log(Level.WARNING, "no food name");
-        }
-        return new CommandResult(result);
-    }
 
-     */
     public CommandResult execute(String dummyInput, ArrayList<Medication> medicationList, Storage storage) {
-        DietSessionParser parser = new DietSessionParser();
         System.out.println("Here is the list of medication at this location: ");
         showMedList(medicationList);
         String result = "";
@@ -87,7 +47,7 @@ public class MedicationAdd extends Command {
             } else if (addOrDeleteInput.equals("delete")) {
                 quantity = deleteQuantity(userInput);
                 medicationList.get(medicationIndex).setQuantity(oldQuantity - quantity);
-                System.out.println("\n" + "You have deleted " + (Math.min(oldQuantity, quantity)) + " " 
+                System.out.println("\n" + "You have deleted " + (Math.min(oldQuantity, quantity)) + " "
                         + medicationList.get(medicationIndex).getName() + "(s)");
                 if (medicationList.get(medicationIndex).getQuantity() <= 0) {
                     System.out.println("There is no more " + medicationList.get(medicationIndex).getName() + " left.");

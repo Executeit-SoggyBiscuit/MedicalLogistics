@@ -69,9 +69,6 @@ public class Main {
         DistMatrix distMatrix = new DistMatrix();
 
         DistResults distResults = distMatrix.getClient(location, locationInfos);
-        for (int i = 0;i<distResults.getRows().get(0).getElements().size();i++){
-            System.out.println(distResults.getRows().get(0).getElements().get(i).getDistance().getText());
-        }
 
 
         new LocationManager().start();

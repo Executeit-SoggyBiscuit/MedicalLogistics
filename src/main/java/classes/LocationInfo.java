@@ -11,7 +11,6 @@ import logic.commands.CommandResult;
 import logic.parser.DietSessionParser;
 import storage.Storage;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -107,7 +106,7 @@ public class LocationInfo {
     private void dietSessionInputLoop() {
         String input = "";
 
-        input = getCommand("Diet Menu > Diet Session " + name);
+        input = getCommand("Location Menu > "+ name);
         while (!input.equals("end")) {
 
             try {
@@ -118,7 +117,7 @@ public class LocationInfo {
             } catch (InvalidCommandWordException | InvalidSearchDateException | InvalidDateFormatException e) {
                 //dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
-            input = getCommand("Diet Menu > Diet Session " + name);
+            input = getCommand("Location Menu > " + name);
         }
     }
 

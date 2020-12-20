@@ -41,11 +41,11 @@ public class LocationManager {
      * Starts Medication manager to read user input.
      */
     public void start() {
-        MedicationManagerUi.printOpening("Medication Menu");
-        String input = MedicationManagerUi.getCommand("Medication Menu");
+        MedicationManagerUi.printOpening("Location Menu");
+        String input = MedicationManagerUi.getCommand("Location Menu");
         assert input != null : "Null input before input loop";
         inputLoop(input);
-        MedicationManagerUi.printReturning("Main Menu");
+        MedicationManagerUi.printReturning("Location Menu");
     }
 
     /**
@@ -62,7 +62,7 @@ public class LocationManager {
             } catch (Exception e) {
                 MedicationManagerUi.showToUser(ExceptionHandler.handleUncheckedExceptions(e));
             }
-            input = MedicationManagerUi.getCommand("Medication Menu");
+            input = MedicationManagerUi.getCommand("Location Menu");
         }
     }
 
@@ -80,7 +80,6 @@ public class LocationManager {
             CommandResult commandResult = command.execute(commParts[1].trim(), storage);
             MedicationManagerUi.showToUser(commandResult.getFeedbackMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
-            logger.log(Level.WARNING, "Invalid command in Medication session");
             throw new InvalidCommandWordException();
         } catch (InvalidDateFormatException e) {
             e.printStackTrace();
