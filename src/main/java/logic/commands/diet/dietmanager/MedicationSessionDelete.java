@@ -35,7 +35,8 @@ public class MedicationSessionDelete extends Command {
         try {
             assert !input.isEmpty() : "No files to delete or wrong folder";
             assert listOfFiles != null;
-            result = DIET_DELETE_SUCCESS;
+            String locationName = listOfFiles[Integer.parseInt(input) - 1].getName();
+            result = "You have deleted " + locationName.substring(0, locationName.lastIndexOf('.'));
             listOfFiles[Integer.parseInt(input) - 1].delete();
             logger.log(Level.INFO, "Deleted Diet Session successfully");
         } catch (NumberFormatException e) {
