@@ -60,23 +60,41 @@ public class MedicationAdd extends Command {
     }
 
      */
-    public CommandResult execute(String input, ArrayList<Medication> medicationList, Storage storage) {
+    public CommandResult execute(String dummyInput, ArrayList<Medication> medicationList, Storage storage) {
         DietSessionParser parser = new DietSessionParser();
-        System.out.println("Add medication please.");
+        System.out.println("Here is the list of medication at this location: ");
         showMedList(medicationList);
         String result = "";
         StringBuilder userOutput = new StringBuilder();
         Scanner userInput = new Scanner(System.in);
-        int medicationIndex = Integer.parseInt(input) - 1;
+
+        System.out.println("Please indicate the index of medication: ");
+        String indexInput  = userInput.nextLine();
+        int medicationIndex = Integer.parseInt(indexInput) - 1;
 
         int quantity = 0;
         if (medicationIndex < 0) {
             quantity = addMedication(userInput, medicationList);
         } else {
-            quantity = addQuantity(userInput);
-            medicationList.get(medicationIndex).setQuantity(quantity);
+            System.out.println("Please indicate whether you want to add or delete: ");
+            String addOrDeleteInput = userInput.nextLine();
+            int oldQuantity = medicationList.get(medicationIndex).getQuantity();
+            if (addOrDeleteInput.equals("add")) {
+                quantity = addQuantity(userInput);
+                medicationList.get(medicationIndex).setQuantity(oldQuantity + quantity);
+                System.out.println("\n" + "You have added " + quantity + " "
+                        + medicationList.get(medicationIndex).getName() + "(s)");
+            } else if (addOrDeleteInput.equals("delete")) {
+                quantity = deleteQuantity(userInput);
+                medicationList.get(medicationIndex).setQuantity(oldQuantity - quantity);
+                System.out.println("\n" + "You have deleted " + (Math.min(oldQuantity, quantity)) + " " 
+                        + medicationList.get(medicationIndex).getName() + "(s)");
+                if (medicationList.get(medicationIndex).getQuantity() <= 0) {
+                    System.out.println("There is no more " + medicationList.get(medicationIndex).getName() + " left.");
+                    medicationList.remove(medicationIndex);
+                }
+            }
         }
-        System.out.println("\n" + "You have added " + Integer.toString(quantity));
 
 
         result = userOutput.toString();
@@ -94,6 +112,7 @@ public class MedicationAdd extends Command {
         String name;
 
         do {
+            System.out.println("Please enter the name of the medication currently not in stock: ");
             name = in.nextLine();
         } while (checkExistence(name, ArrayListMedication.getInstance().getArray()));
         System.out.println("You have added " + name + " to the list");
@@ -105,6 +124,7 @@ public class MedicationAdd extends Command {
 
         return quantity;
     }
+
 
     public boolean checkExistence(String inputName, ArrayList<Medication> medicationList) {
         boolean isExist = false;
@@ -124,6 +144,18 @@ public class MedicationAdd extends Command {
         int number = 0;
         while (number <= 0) {
             System.out.print("Quantity to add: ");
+            input = in.nextLine();
+            number = convertStringToNumber(input);
+            System.lineSeparator();
+        }
+        return number;
+    }
+
+    private int deleteQuantity(Scanner in) {
+        String input;
+        int number = 0;
+        while (number <= 0) {
+            System.out.print("Quantity to delete: ");
             input = in.nextLine();
             number = convertStringToNumber(input);
             System.lineSeparator();
