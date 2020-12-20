@@ -23,6 +23,7 @@ public class MedicationSessionList extends Command {
     @Override
     public CommandResult execute(String input, Storage storage) {
         String message = EMPTY_STRING;
+        System.out.println("list location");
         File folder = new File(PATH_TO_DIET_FOLDER);
         File[] listOfFiles = folder.listFiles();
         StringBuilder listResult = new StringBuilder();

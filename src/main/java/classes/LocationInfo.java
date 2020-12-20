@@ -11,6 +11,7 @@ import logic.commands.CommandResult;
 import logic.parser.DietSessionParser;
 import storage.Storage;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -90,11 +91,15 @@ public class LocationInfo {
 
         this.cl = new CommandLib();
         cl.initMedicationSessionCl();
+        if (name.endsWith(".json")) {
+            name =  name.substring(0,name.length() - ".json".length());
+        }
         this.name = name;
         // save the file upon creation
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
         dietSessionInputLoop();
     }
+
 
     /**
      * Starts reading user input for dietSession commands.
@@ -143,7 +148,7 @@ public class LocationInfo {
 
         String[] commParts = parser.parseCommand(input);
         Command command = cl.getCommand(commParts[0]);
-        CommandResult commandResult = command.execute(commParts[1].trim(), storage);
+        CommandResult commandResult = command.execute(commParts[1].trim(), medList, storage);
         //dietSessionUi.showToUser(commandResult.getFeedbackMessage());
         saveToFile(PATH_TO_DIET_FOLDER, storage, this);
     }
@@ -158,8 +163,8 @@ public class LocationInfo {
      */
     public void saveToFile(String filePath, Storage storage, LocationInfo ds) {
         try {
-            storage.init(filePath, ds.getName().toString());
-            storage.writeToStorageDietSession(filePath, ds.getName().toString(), ds);
+            storage.init(filePath, ds.getName());
+            storage.writeToStorageDietSession(filePath, ds.getName(), ds);
             //logger.log(Level.INFO, "Diet session successfully saved");
         } catch (IOException e) {
             //logger.log(Level.WARNING, "save profile session failed");

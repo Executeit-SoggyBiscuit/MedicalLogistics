@@ -2,6 +2,7 @@ package logic.commands.diet.dietsession;
 
 import Location.Medication;
 import classes.ArrayListMedication;
+import classes.LocationInfo;
 import logic.commands.Command;
 import logic.parser.DietSessionParser;
 import logic.commands.CommandResult;
@@ -59,22 +60,22 @@ public class MedicationAdd extends Command {
     }
 
      */
-    public CommandResult execute(String input, ArrayList<Medication> medicationList, Storage storage, Integer index) {
+    public CommandResult execute(String input, ArrayList<Medication> medicationList, Storage storage) {
         DietSessionParser parser = new DietSessionParser();
+        System.out.println("Add medication please.");
+        showMedList(medicationList);
         String result = "";
-        assert !input.isEmpty();
         StringBuilder userOutput = new StringBuilder();
         Scanner userInput = new Scanner(System.in);
-        int medicationIndex = Integer.parseInt(input);
+        int medicationIndex = Integer.parseInt(input) - 1;
 
-        if (medicationIndex == 0) {
-            addMedication(userInput);
+        int quantity = 0;
+        if (medicationIndex < 0) {
+            quantity = addMedication(userInput, medicationList);
+        } else {
+            quantity = addQuantity(userInput);
+            medicationList.get(medicationIndex).setQuantity(quantity);
         }
-
-        //ask quantity
-        addQuantity(userInput);
-
-        int quantity = addQuantity(userInput);
         System.out.println("\n" + "You have added " + Integer.toString(quantity));
 
 
@@ -82,20 +83,27 @@ public class MedicationAdd extends Command {
         return new CommandResult(result);
     }
 
-    private int addMedication(Scanner in) {
+    private void showMedList(ArrayList<Medication> medicationList) {
+        for (Medication med : medicationList) {
+            System.out.println(med.getName() + " " + med.getQuantity());
+        }
+    }
+
+    private int addMedication(Scanner in, ArrayList<Medication> medList) {
         int index = 0;
         String name;
 
         do {
             name = in.nextLine();
         } while (checkExistence(name, ArrayListMedication.getInstance().getArray()));
-
-        Medication temp = new Medication(name, 0);
-        ArrayListMedication.getInstance().getArray().add(temp);
         System.out.println("You have added " + name + " to the list");
+        int quantity = addQuantity(in);
+        Medication temp = new Medication(name, quantity);
+        medList.add(temp);
+        ArrayListMedication.getInstance().getArray().add(temp);
         logger.log(Level.INFO, "Added medication to arraylist");
 
-        return index;
+        return quantity;
     }
 
     public boolean checkExistence(String inputName, ArrayList<Medication> medicationList) {
