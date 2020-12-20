@@ -63,12 +63,12 @@ public class CommandLib {
         library.put(COMMAND_WORD_WRONG, new MedicationSessionWrong());
     }
     public void initMedicationSessionCl() {
-        library.put(COMMAND_WORD_ADD, new MedicationAdd());
-        library.put(COMMAND_WORD_DELETE, new MedicationDelete());
-        library.put(COMMAND_WORD_HELP, new MedicationHelp());
+        library.put(COMMAND_WORD_LIST, new MedicationAdd());
+        //library.put(COMMAND_WORD_DELETE, new MedicationDelete());
+        //library.put(COMMAND_WORD_HELP, new MedicationHelp());
         library.put(COMMAND_WORD_CLEAR, new MedicationClear());
-        library.put(COMMAND_WORD_SEARCH, new MedicationSearch());
-        library.put(COMMAND_WORD_LIST, new MedicationList());
+        //library.put(COMMAND_WORD_SEARCH, new MedicationSearch());
+        //library.put(COMMAND_WORD_LIST, new MedicationList());
         library.put(COMMAND_WORD_WRONG, new MedicationWrong());
     }
 
