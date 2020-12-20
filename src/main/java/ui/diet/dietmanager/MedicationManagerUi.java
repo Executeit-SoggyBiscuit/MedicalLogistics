@@ -7,7 +7,7 @@ import ui.CommonUi;
  * A class that is responsible for user interface of Diet Manager.
  */
 public class MedicationManagerUi extends CommonUi {
-    public static String DIET_NO_SESSION_SAVED = "Sorry! It seems like you have no diet sessions saved!";
+    public static String DIET_NO_SESSION_SAVED = "Sorry! It seems like you have no locations saved!";
     public static String DIET_IO_WRONG_FORMAT = "It seems like we ran into some problems saving your session...";
     public static String DIET_FILE_ARRAY_OUT_OF_BOUND = "Sorry, there is no file at that index.";
     public static String DIET_FILE_NOT_FOUND = "Sorry, there seems to be no file.";

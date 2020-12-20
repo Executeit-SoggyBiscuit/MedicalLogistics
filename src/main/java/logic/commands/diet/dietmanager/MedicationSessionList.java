@@ -23,17 +23,25 @@ public class MedicationSessionList extends Command {
     @Override
     public CommandResult execute(String input, Storage storage) {
         String message = EMPTY_STRING;
-        System.out.println("list location");
         File folder = new File(PATH_TO_DIET_FOLDER);
         File[] listOfFiles = folder.listFiles();
         StringBuilder listResult = new StringBuilder();
+        System.out.println("you have " + listOfFiles.length + " locations stored.");
+        for (int i=0; i< listOfFiles.length; i++) {
+            System.out.println(listOfFiles[i].getName().split(".json", 2)[0]);
+        }
         assert folder.exists();
         try {
             String dietSessionListSize = "You have " + listOfFiles.length + " location(s)" + LS;
             String dietSessionList = formatList(listOfFiles, storage);
             listResult.append(dietSessionListSize);
             listResult.append(dietSessionList);
-            message = listResult.toString();
+            message += listResult.toString();
+            message += "\n";
+            for (int i=0; i< listOfFiles.length; i++){
+                message += listOfFiles[i].getName() + "\n";
+            }
+            System.out.println(message);
             logger.log(Level.INFO, "Listed all available locations");
         } catch (NullPointerException | NoSuchElementException e) {
             message = MedicationManagerUi.DIET_NO_SESSION_SAVED;
