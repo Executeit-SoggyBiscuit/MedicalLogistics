@@ -28,7 +28,7 @@ public class MedicationAdd extends Command {
         StringBuilder userOutput = new StringBuilder();
         Scanner userInput = new Scanner(System.in);
 
-        System.out.println("Please indicate the index of medication: ");
+        System.out.println("Please indicate the index of medication (Enter 0 to add a new kind of medication): ");
         String indexInput  = userInput.nextLine();
         int medicationIndex = Integer.parseInt(indexInput) - 1;
 
@@ -62,8 +62,9 @@ public class MedicationAdd extends Command {
     }
 
     private void showMedList(ArrayList<Medication> medicationList) {
+        int index = 1;
         for (Medication med : medicationList) {
-            System.out.println(med.getName() + " " + med.getQuantity());
+            System.out.println(index++ + " " + med.getName() + " of Quantity: " + med.getQuantity());
         }
     }
 
