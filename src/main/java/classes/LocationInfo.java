@@ -13,6 +13,7 @@ import storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static seedu.duke.Constants.PATH_TO_DIET_FOLDER;
 
@@ -101,8 +102,7 @@ public class LocationInfo {
     private void dietSessionInputLoop() {
         String input = "";
 
-        //input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
-        System.out.println("Diet Menu > Diet Session " + name + " >>> ");
+        input = getCommand("Diet Menu > Diet Session " + name);
         while (!input.equals("end")) {
 
             try {
@@ -113,9 +113,22 @@ public class LocationInfo {
             } catch (InvalidCommandWordException | InvalidSearchDateException | InvalidDateFormatException e) {
                 //dietSessionUi.showToUser(ExceptionHandler.handleCheckedExceptions(e));
             }
-            //input = dietSessionUi.getCommand("Diet Menu > Diet Session " + name);
-            System.out.println("Diet Menu > Diet Session " + name + " >>> ");
+            input = getCommand("Diet Menu > Diet Session " + name);
         }
+    }
+
+    public String getCommand(String menuName) {
+        System.out.print(menuName + " >>>>> ");
+        Scanner sc = new Scanner(System.in);
+        String inputLine = sc.nextLine();
+
+        // Silently consume all blank lines
+        while (inputLine.trim().isEmpty()) {
+            System.out.print(menuName + " >>>>> ");
+            inputLine = sc.nextLine();
+        }
+
+        return inputLine.replaceAll("\\s+", " ").trim();
     }
 
     /**

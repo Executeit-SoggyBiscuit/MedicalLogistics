@@ -78,7 +78,7 @@ public class MedicationManagerParser extends CommonParser {
                 return tag;
             }
         } catch (NullPointerException e) {
-            extractMealMessage.append("No Name is detected\n");
+            extractMealMessage.append("No Address input is detected\n");
             return null;
         }
     }
